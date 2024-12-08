@@ -5,7 +5,6 @@ import Input from './Input';
 const InputExample = () => {
   const [value, setValue] = useState('');
   const handleInputChange = (e) => {
-    console.log(e.target.value);
     setValue(e.target.value);
   }
   return (
