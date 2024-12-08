@@ -1,0 +1,51 @@
+.typography {
+  color: #0f132e;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+h1.typography {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+h2.typography {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+h3.typography {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+h4.typography {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+h5.typography {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+h6.typography {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+p.typography {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+span.typography {
+  font-size: 1rem;
+}
