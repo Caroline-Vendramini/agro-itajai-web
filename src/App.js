@@ -1,8 +1,16 @@
 import RoutesApp from "./routes";
+import Loader from "./components/loader/Loader";
+import { LoaderProvider } from "./providers/LoaderProvider";
 
 function App() {
+
   return (
-    <RoutesApp/>
+    <>
+      <LoaderProvider>
+        <Loader />
+        <RoutesApp />
+      </LoaderProvider>
+    </>
   );
 }
 
