@@ -21,7 +21,7 @@ function RoutesApp() {
                 />
                 <Route path="/" element={<Layout />}>
                     <Route
-                        path="/dashboard"
+                        index
                         element={
                             <ProtectedRoute isLogged={isLogged} element={<Dashboard />} />
                         }
@@ -74,14 +74,14 @@ const ProtectedRoute = ({ isLogged, element }) => {
 };
 
 const PublicRoute = ({ isLogged, element }) => {
-    return !isLogged ? element : <Navigate to="/dashboard" replace />;
+    return !isLogged ? element : <Navigate to="/" replace />;
 };
 
 const NavigateTo = ({ isLogged }) => {
     return !isLogged ? (
         <Navigate to="/login" replace />
     ) : (
-        <Navigate to="/dashboard" />
+        <Navigate to="/" />
     );
 };
 
