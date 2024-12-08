@@ -9,7 +9,7 @@ const Layout = () => {
         <div />
         <nav>
           <ul>
-            <li><Link to="/dashboard">Início</Link></li>
+            <li><Link to="/">Início</Link></li>
             <li><Link to="/vendas">Vendas</Link></li>
             <li><Link to="/clientes">Clientes</Link></li>
             <li><Link to="/contabilidade">Contabilidade</Link></li>

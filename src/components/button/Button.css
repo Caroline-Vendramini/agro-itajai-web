@@ -1,0 +1,32 @@
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 4px;
+}
+
+.button-primary {
+  background-color: #19274e;
+  color: #eaeaea;
+}
+
+.button-cancel {
+  background-color: #bd1717;
+  color: #eaeaea;
+}
+
+.button-primary:hover {
+  opacity: 0.8;
+}
+
+.button-cancel:hover {
+  opacity: 0.8;
+  background-color: #ac5858;
+}
+
+.button-primary:active,
+.button-cancel:active {
+  opacity: 0.6;
+}
