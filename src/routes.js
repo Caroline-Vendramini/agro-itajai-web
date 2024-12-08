@@ -6,7 +6,7 @@ import Clientes from "./pages/Clientes";
 import Contabilidade from "./pages/Contabilidade";
 import Usuarios from "./pages/Usuarios";
 import Estoque from "./pages/Estoque";
-import Configuracoes from "./pages/Dashboard";
+import Configuracoes from "./pages/Configuracoes";
 import Layout from "./components/layout/Layout";
 
 function RoutesApp() {
