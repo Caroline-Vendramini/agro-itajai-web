@@ -1,0 +1,49 @@
+/* Layout.css */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  flex: 0 0 200px;
+  background-color: #536d88;
+  padding: 20px;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #eaeaea;
+}
+
+.sidebar a:hover {
+  background-color: #19274e;
+}
+
+.header {
+  background-color: #19274e;
+  padding: 20px;
+  text-align: center;
+  color: #eaeaea;
+  display: flex;
+  height: 60px;
+}
+
+.main-content {
+  flex: 1;
+  background-color: #eaeaea;
+}
+
+main {
+  padding: 20px;
+}
+
+.footer {
+  background-color: #4caf50;
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
