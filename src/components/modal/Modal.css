@@ -11,7 +11,7 @@
   z-index: 1000;
 }
 
-.modal-content {
+.modal-container {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -29,4 +29,22 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modal-content {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
