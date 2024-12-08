@@ -19,25 +19,22 @@ const TableExample = () => {
   ];
 
   return (
-    <div>
-      <h1>Tabela de Exemplo</h1>
-      <Table>
-        <Table.Head>
-          {columns.map((column, index) => (
-            <Table.Cell key={index}>{column.Header}</Table.Cell>
-          ))}
-        </Table.Head>
-        <Table.Body>
-          {data.map((row, index) => (
-            <Table.Row key={index}>
-              {columns.map((column, index) => (
-                <Table.Cell key={index}>{row[column.accessor]}</Table.Cell>
-              ))}
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
-    </div>
+    <Table>
+      <Table.Head>
+        {columns.map((column, index) => (
+          <Table.Cell key={index}>{column.Header}</Table.Cell>
+        ))}
+      </Table.Head>
+      <Table.Body>
+        {data.map((row, index) => (
+          <Table.Row key={index}>
+            {columns.map((column, index) => (
+              <Table.Cell key={index}>{row[column.accessor]}</Table.Cell>
+            ))}
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
   );
 };
 
