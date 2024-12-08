@@ -1,20 +1,41 @@
+import Button from "../../components/button/Button";
+import Checkbox from "../../components/checkbox/Checkbox";
+import Input from "../../components/input/Input";
+import Typography from "../../components/typography/Typography";
+
 import "./index.css"
 function Login() {
     return (
       <div className="container">
         <div className="content">
-          <h1 className="roboto-black login-title">Login</h1>
-          <input className="input" placeholder="Usuário" type="text"/>
-          <input className="input" placeholder="Senha" type="password"/>
+          <Typography variant="h2">
+            Login
+          </Typography>
+          <Input
+            type="text"
+            label={"Usuário"}
+            placeholder="Digite seu usuário"
+            // value={value}
+            // onChange={handleInputChange}
+          />
+          <Input
+            type="password"
+            label={"Senha"}
+            placeholder="Digite sua senha"
+            // value={value}
+            // onChange={handleInputChange}
+          />
           <div className="remember">
-            <div className="label">
-              <input type="checkbox" id="remember-me"/>
-              <label htmlFor="remember-me">Lembrar-me</label>
-            </div>
+            <Checkbox
+              label="Lembrar-me"
+              // checked={isChecked}
+              // onChange={handleCheckboxChange}
+            />
 
             <a className="link">Esqueci minha senha</a>
           </div>
-          <button className="button">ENTRAR</button>
+          <Button onClick={() => alert('Botão clicado!')}>ENTRAR</Button>
+
         </div>
       </div>
     );
