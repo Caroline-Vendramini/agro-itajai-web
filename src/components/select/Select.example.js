@@ -5,11 +5,11 @@ const SelectExample = () => {
   const [selectedOption, setSelectedOption] = useState('');
 
   // Options pode ser um array de strings ou um array de objetos
-  const options = [
-    'João Pedro Oliveira',
-    'Maria da Silva',
-    'José da Silva Sauro',
-  ];
+  // const options = [
+  //   'João Pedro Oliveira',
+  //   'Maria da Silva',
+  //   'José da Silva Sauro',
+  // ];
 
   const options2 = [
     { value: 'João Pedro Oliveira', label: 'Cabeça branca' },
