@@ -1,8 +1,8 @@
 
 
-import Button from "../../components/button/Button";
-import Input from "../../components/input/Input";
-import Typography from "../../components/typography/Typography";
+import Button from "../../../../components/button/Button";
+import Input from "../../../../components/input/Input";
+import Typography from "../../../../components/typography/Typography";
 import "./index.css"
 function Senha() {
   return (
@@ -21,7 +21,7 @@ function Senha() {
           label={"Senha"}
           placeholder="Digite sua nova senha"
         />
-         <Input
+        <Input
           type="password"
           label={"Senha"}
           placeholder="Repita sua nova senha"
@@ -31,6 +31,5 @@ function Senha() {
     </div>
   );
 }
-  
-  export default Senha;
-  
+
+export default Senha;

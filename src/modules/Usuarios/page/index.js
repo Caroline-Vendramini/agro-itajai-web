@@ -1,10 +1,10 @@
-import Senha from "../Senha";
+import Senha from "../component/Senha";
 
 function Usuarios() {
   return (
     <div>
       <h1>Pagina Usuários</h1>
-      <Senha/>
+      <Senha />
     </div>
   );
 }
