@@ -11,7 +11,7 @@ import Layout from "./components/layout/Layout";
 
 function RoutesApp() {
     // TODO: Implementar a lógica de autenticação
-    const isLogged = false; // Simulando que o usuário está logado
+    const isLogged = true; // Simulando que o usuário está logado
     return (
         <BrowserRouter>
             <Routes>
