@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Vendas from "./pages/Vendas";
-import Clientes from "./pages/Clientes";
-import Contabilidade from "./pages/Contabilidade";
-import Usuarios from "./pages/Usuarios";
-import Estoque from "./pages/Estoque";
-import Configuracoes from "./pages/Configuracoes";
+import Login from "./modules/Login/page";
+import Dashboard from "./modules/Dashboard/page";
+import Vendas from "./modules/Vendas/page";
+import Clientes from "./modules/Clientes/page";
+import Contabilidade from "./modules/Contabilidade/page";
+import Usuarios from "./modules/Usuarios/page";
+import Estoque from "./modules/Estoque/page";
+import Configuracoes from "./modules/Configuracoes/page";
 import Layout from "./components/layout/Layout";
 
 function RoutesApp() {
     // TODO: Implementar a lógica de autenticação
-    const isLogged = false; // Simulando que o usuário está logado
+    const isLogged = true; // Simulando que o usuário está logado
     return (
         <BrowserRouter>
             <Routes>
