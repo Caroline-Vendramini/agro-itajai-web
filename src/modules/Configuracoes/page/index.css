@@ -1,0 +1,9 @@
+.usuarios-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .usuarios-w400 {
+    width: 200px;
+  }
+}
