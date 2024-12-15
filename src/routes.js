@@ -14,8 +14,14 @@ import Usuarios from "./modules/Usuarios/page";
 import Vendas from "./modules/Vendas/page";
 
 function RoutesApp() {
-    const [localToken, , removeValue] = useStorage(TOKEN, "");
-    const [isLogged, setIsLogged] = useState(false);
+    const { storedValue: localToken, removeValue } = useStorage(TOKEN, "");
+    const [isLogged, setIsLogged] = useState(() => {
+        if (localToken) {
+            const decoded = jwtDecode(localToken);
+            return decoded.exp * 1000 > new Date().getTime();
+        }
+        return false;
+    });
 
     useEffect(() => {
         if (localToken) {
@@ -26,7 +32,7 @@ function RoutesApp() {
                 removeValue();
             }
         }
-    }, [localToken]);
+    }, [localToken, removeValue]);
 
     return (
         <BrowserRouter>

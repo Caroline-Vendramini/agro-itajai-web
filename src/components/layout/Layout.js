@@ -5,7 +5,7 @@ import useStorage from "../../hooks/useStorage";
 import "./Layout.css";
 
 const Layout = () => {
-  const [, , removeValue] = useStorage(TOKEN, "");
+  const { removeValue } = useStorage(TOKEN, "");
 
   const handleLogoutClick = () => {
     removeValue();

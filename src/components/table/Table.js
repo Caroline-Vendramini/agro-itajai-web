@@ -1,9 +1,9 @@
 import React from 'react';
 import './Table.css';
 
-const Container = ({ children }) => {
+const Container = ({ children, tableClassname = '' }) => {
   return (
-    <table className="table">
+    <table className={`table ${tableClassname}`}>
       {children}
     </table>
   );
@@ -43,9 +43,9 @@ const TableCell = ({ children }) => {
   );
 };
 
-const Table = ({ children }) => {
+const Table = ({ children, tableClassname = '' }) => {
   return (
-    <Container>
+    <Container tableClassname={tableClassname}>
       {children}
     </Container>
   );

@@ -32,7 +32,7 @@ const useStorage = (key, initialValue, storageType = "localStorage") => {
     }
   };
 
-  return [storedValue, setValue, removeValue];
+  return { storedValue, setValue, removeValue };
 };
 
 export default useStorage;

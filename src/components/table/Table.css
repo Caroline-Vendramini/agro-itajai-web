@@ -1,6 +1,5 @@
 .table {
   margin: 4px;
-  width: 100%;
   border-collapse: collapse;
   font-family: "Arial", sans-serif;
   background-color: #eaeaea; /* cor de fundo */
@@ -29,9 +28,13 @@
 }
 
 .table-cell {
-  padding: 12px 15px;
+  padding: 0px 6px;
   border: 1px solid #ddd;
   color: #0f132e; /* cor de texto */
+}
+
+thead .table-cell {
+  padding: 12px 15px;
 }
 
 .table-cell:first-child {

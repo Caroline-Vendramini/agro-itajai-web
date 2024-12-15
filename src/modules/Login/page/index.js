@@ -17,7 +17,7 @@ function Login() {
     content: "",
   });
   const { isModalOpen, toggleModal } = useModal();
-  const [, setToken, removeToken] = useStorage(TOKEN, "");
+  const { setValue: setToken, removeValue: removeToken } = useStorage(TOKEN, "");
 
   const handleSubmit = async (e) => {
     e.preventDefault();

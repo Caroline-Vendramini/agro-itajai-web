@@ -5,7 +5,7 @@ import Modal from "./Modal";
 
 // Exemplo de uso do Modal
 const ModalExample = () => {
-  const { isModalOpen, toggleModal, openModal, closeModal } = useModal();
+  const { isModalOpen, toggleModal } = useModal();
 
   return (
     <div>
