@@ -1,0 +1,38 @@
+.usuarios-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & .usuarios-search-area {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+
+    > .usuarios-grow {
+      flex-grow: 1;
+    }
+  }
+
+  .usuarios-modal-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+
+    .usuarios-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+
+      h4 {
+        margin-right: 10px;
+      }
+    }
+  }
+}

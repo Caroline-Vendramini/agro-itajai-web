@@ -79,7 +79,7 @@ function Clientes() {
     showLoader();
     try {
       const response = await axios.get("customers");
-      const c = response.data.map((customer) => {
+      const mappedCustomers = response.data.map((customer) => {
         return {
           ...customer,
           debit: formatMoney(customer.totalDebit - customer.totalDebitPaid),
@@ -101,7 +101,7 @@ function Clientes() {
           ),
         };
       });
-      setCustomers(c);
+      setCustomers(mappedCustomers);
       handleSearch();
     } catch (error) {
       console.error(error);
@@ -109,9 +109,6 @@ function Clientes() {
     hideLoader();
   }, [
     handleCustomerDetails,
-    // handleSearch,
-    // hideLoader,
-    // showLoader,
     toggleUpdateCustomerModal,
   ]);
 
@@ -169,6 +166,11 @@ function Clientes() {
     const nickname = formData.get("nickname");
     const phone = formData.get("phone");
 
+    if (!name) {
+      alert("Preencha o nome do cliente");
+      return;
+    }
+
     axios
       .post("customers", {
         name,
@@ -186,20 +188,22 @@ function Clientes() {
 
   const handleSubmitUpdateCustomer = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const name = formData.get("name");
-    const nickname = formData.get("nickname");
-    const phone = formData.get("phone");
+    const { name, nickname, phone, id } = updateCustomer
+
+    if (!name || !nickname || !phone) {
+      alert("Preencha todos os campos");
+      return;
+    }
 
     axios
-      .post("customers", {
+      .patch(`customers/${id}`, {
         name,
         nickname,
         phone,
       })
       .then(() => {
         fetchCustomers();
-        toggleRegisterCustomerModal();
+        toggleUpdateCustomerModal();
       })
       .catch((error) => {
         console.error(error);
