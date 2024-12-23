@@ -1,21 +1,38 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import { TOKEN } from "../../constants";
+import { Link, Navigate, Outlet } from "react-router-dom";
+import { SELECTED_UNIT_ID, TOKEN } from "../../constants";
 import useStorage from "../../hooks/useStorage";
 import "./Layout.css";
+import { useUnit } from "../../hooks/useUnit";
 
 const Layout = () => {
-  const { removeValue } = useStorage(TOKEN, "");
+  const { storedValue, removeValue } = useStorage(TOKEN, "");
+  const { selectedUnit, setSelectedUnit, units } = useUnit();
+  const { setValue } = useStorage(SELECTED_UNIT_ID, null);
 
   const handleLogoutClick = () => {
     removeValue();
     window.location.reload();
   };
 
+  const handleChangeUnit = (e) => {
+    const selected = units.find(unit => unit.id.toString() === e.target.value);
+    setSelectedUnit(selected);
+    setValue(selected.id);
+    window.location.reload();
+  }
+
+  if (storedValue && !selectedUnit) {
+    return <div>Carregando...</div>
+  }
+
+  if (!storedValue) {
+    return <Navigate to="/login" replace />
+  }
+
   return (
     <div className="layout">
       <aside className="sidebar">
-        <div />
         <nav>
           <ul>
             <li>
@@ -47,7 +64,15 @@ const Layout = () => {
       </aside>
       <div className="main-content">
         <header className="header roboto-medium">
-          <h1>Agro Itajaí</h1>
+          <h1>Agro Itajaí - Unidade {selectedUnit.name}</h1>
+          <select
+            onChange={handleChangeUnit}
+            value={selectedUnit?.id}
+          >
+            {units.map(unit => (
+              <option key={unit.id} value={unit.id}>{unit.name}</option>
+            ))}
+          </select>
         </header>
         <main>
           <Outlet />

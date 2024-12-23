@@ -4,6 +4,8 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+
+  /* TODO: Remover margin do botão. A margem deve estar no elemento pai do botão */
   margin: 4px;
 }
 
@@ -57,4 +59,9 @@
 .button-warning:active,
 .button-danger:active {
   opacity: 0.6;
+}
+
+.button-small {
+  padding: 5px 10px;
+  font-size: 14px;
 }

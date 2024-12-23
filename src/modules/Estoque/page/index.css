@@ -1,0 +1,115 @@
+.estoque-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & .estoque-search-area {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+
+    > .estoque-grow {
+      flex-grow: 1;
+    }
+  }
+
+  .estoque-modal-content-register {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+
+    .estoque-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+
+      h4 {
+        margin-right: 10px;
+      }
+    }
+
+    .estoque-modal-content-register-inputs {
+      display: flex;
+      margin-top: 12px;
+
+      .w1third690 {
+        width: calc(690px / 3);
+      }
+      .w350 {
+        width: 350px;
+      }
+      .w710 {
+        width: 710px;
+      }
+    }
+  }
+
+  .estoque-modal-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+
+    .estoque-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+
+      h4 {
+        margin-right: 10px;
+      }
+
+      .estoque-modal-info-pay {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .estoque-modal-info {
+      display: flex;
+      flex-direction: column;
+
+      .estoque-modal-info-price-history {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        .estoque-modal-info-price-history-info {
+          display: flex;
+          justify-content: space-between;
+          /* margin-top: 10px; */
+
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .estoque-tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+}

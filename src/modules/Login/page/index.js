@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "../../../axios";
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import Modal from "../../../components/modal/Modal";
@@ -8,6 +7,7 @@ import { TOKEN } from "../../../constants";
 import useModal from "../../../hooks/useModal";
 import useStorage from "../../../hooks/useStorage";
 import "./index.css";
+import useAxios from "../../../hooks/useAxios";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -17,6 +17,7 @@ function Login() {
     content: "",
   });
   const { isModalOpen, toggleModal } = useModal();
+  const { fetchData } = useAxios();
   const { setValue: setToken, removeValue: removeToken } = useStorage(TOKEN, "");
 
   const handleSubmit = async (e) => {
@@ -26,7 +27,11 @@ function Login() {
         username,
         password,
       };
-      const result = await axios.post("/auth/signin", data);
+      const result = await fetchData({
+        url: "/auth/signin",
+        method: "post",
+        data,
+      });
       if (result.status === 201) {
         setToken(result.data.access_token);
         window.location.reload();

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import axios from "../../../axios";
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import Table from "../../../components/table/Table";
@@ -11,6 +10,7 @@ import RegisterUserModal from "../component/RegisterUserModal";
 import UpdateUserModal from "../component/UpdateUserModal";
 import UpdateUserPasswordModal from "../component/UpdateUserPasswordModal";
 import "./index.css";
+import useAxios from "../../../hooks/useAxios";
 
 const columns = [
   { Header: "Nome", accessor: "name" },
@@ -26,6 +26,7 @@ function Usuarios() {
   const [updateUserPassword, setUpdateUserPassword] = useState(null);
 
   const { showLoader, hideLoader } = useLoader();
+  const { fetchData } = useAxios();
 
   const {
     isModalOpen: registerUserModal,
@@ -58,7 +59,9 @@ function Usuarios() {
   const fetchUsers = useCallback(async () => {
     showLoader();
     try {
-      const response = await axios.get("users");
+      const response = await fetchData({
+        url: "/users",
+      });
       const mappedUsers = response.data.map((user) => {
         return {
           ...user,
@@ -116,11 +119,14 @@ function Usuarios() {
       return;
     }
 
-    axios
-      .patch(`users/${id}`, {
+    fetchData({
+      url: `users/${id}`,
+      method: "patch",
+      data: {
         name,
         username,
-      })
+      },
+    })
       .then(() => {
         fetchUsers();
         toggleUpdateUserModal();
@@ -144,10 +150,13 @@ function Usuarios() {
       return;
     }
 
-    axios
-      .patch(`users/${id}`, {
+    fetchData({
+      url: `users/${id}`,
+      method: "patch",
+      data: {
         password,
-      })
+      },
+    })
       .then(() => {
         fetchUsers();
         toggleUpdateUserPasswordModal();
@@ -175,12 +184,15 @@ function Usuarios() {
       return;
     }
 
-    axios
-      .post("users", {
+    fetchData({
+      url: "users",
+      method: "post",
+      data: {
         name,
         username,
         password,
-      })
+      },
+    })
       .then(() => {
         fetchUsers();
         toggleRegisterUserModal();
@@ -225,7 +237,7 @@ function Usuarios() {
           placeholder={"Nome ou usuário"}
         />
         <Button variant="success" onClick={handleOpenRegisterUser}>
-          Cadastrar usuário
+          Novo usuário
         </Button>
       </div>
 

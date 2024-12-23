@@ -18,8 +18,10 @@ function RoutesApp() {
     const [isLogged, setIsLogged] = useState(() => {
         if (localToken) {
             const decoded = jwtDecode(localToken);
-            return decoded.exp * 1000 > new Date().getTime();
+            const isExpired = decoded.exp * 1000 <= new Date().getTime();
+            return !isExpired
         }
+        removeValue();
         return false;
     });
 

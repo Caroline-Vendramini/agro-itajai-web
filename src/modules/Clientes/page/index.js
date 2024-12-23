@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import axios from "../../../axios";
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import Table from "../../../components/table/Table";
@@ -15,6 +14,7 @@ import DebitPaymentSuccessModal from "../components/DebitPaymentSuccessModal";
 import RegisterCustomerModal from "../components/RegisterCustomerModal";
 import UpdateCustomerModal from "../components/UpdateCustomerModal";
 import "./index.css";
+import useAxios from "../../../hooks/useAxios";
 
 const columns = [
   { Header: "Nome", accessor: "name" },
@@ -48,6 +48,7 @@ function Clientes() {
   const [updateCustomer, setUpdateCustomer] = useState(null);
 
   const { showLoader, hideLoader } = useLoader();
+  const { fetchData } = useAxios();
 
   const handleCustomerDetails = useCallback(
     (customer) => {
@@ -78,7 +79,9 @@ function Clientes() {
   const fetchCustomers = useCallback(async () => {
     showLoader();
     try {
-      const response = await axios.get("customers");
+      const response = await fetchData({
+        url: "customers",
+      });
       const mappedCustomers = response.data.map((customer) => {
         return {
           ...customer,
@@ -136,14 +139,17 @@ function Clientes() {
       return;
     }
 
-    axios
-      .post("debit-payment", {
+    fetchData({
+      url: "debit-payment",
+      method: "post",
+      data: {
         customerId: customerDetails.id,
         amount: value,
         date: formatDateToISO(new Date()),
         // TODO: Adicionar descrição
         // description: 'Pagamento de fiado'
-      })
+      },
+    })
       .then(() => {
         fetchCustomers();
         toggleModal();
@@ -171,12 +177,15 @@ function Clientes() {
       return;
     }
 
-    axios
-      .post("customers", {
+    fetchData({
+      url: "customers",
+      method: "post",
+      data: {
         name,
         nickname,
         phone,
-      })
+      },
+    })
       .then(() => {
         fetchCustomers();
         toggleRegisterCustomerModal();
@@ -195,12 +204,15 @@ function Clientes() {
       return;
     }
 
-    axios
-      .patch(`customers/${id}`, {
+    fetchData({
+      url: `customers/${id}`,
+      method: "patch",
+      data: {
         name,
         nickname,
         phone,
-      })
+      },
+    })
       .then(() => {
         fetchCustomers();
         toggleUpdateCustomerModal();
@@ -263,7 +275,7 @@ function Clientes() {
           placeholder={"Nome/Apelido do cliente"}
         />
         <Button variant="success" onClick={handleOpenRegisterCustomer}>
-          Cadastrar cliente
+          Novo cliente
         </Button>
       </div>
 

@@ -36,6 +36,8 @@
   height: 60px;
   position: fixed;
   width: -webkit-fill-available;
+  display: flex;
+  justify-content: space-between;
 }
 
 .main-content {

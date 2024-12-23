@@ -2,7 +2,7 @@ import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import Modal from "../../../components/modal/Modal";
 import Typography from "../../../components/typography/Typography";
-import { formatMoney, moneyMask } from "../../../utils/money";
+import { formatMoney } from "../../../utils/money";
 
 const DebitPaymentModal = ({
   payModal,
@@ -39,7 +39,7 @@ const DebitPaymentModal = ({
           <Input
             autoFocus
             value={payValue}
-            onChange={(e) => setPayValue(moneyMask(e.target.value))}
+            onChange={(e) => setPayValue(formatMoney(e.target.value))}
             required
             placeholder={"Valor"}
           />

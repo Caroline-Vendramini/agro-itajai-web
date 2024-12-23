@@ -1,20 +1,21 @@
 import React from 'react';
-import './Select.css'; // Assuming you will create a CSS file for styling
+import Input from '../input/Input';
 
-const Select = ({ options, id, name, value, placeholder, onChange }) => {
+const Select = ({ options, id, name, label, value, placeholder, onChange, outerClassname }) => {
   return (
-    <div className="select-container">
-      <input
+    <div >
+      <Input
+        outerClassname={outerClassname}
         list={id}
         name={name}
+        label={label}
         value={value.value ?? value}
         placeholder={placeholder}
         onChange={onChange}
-        className="select-input"
       />
-      <datalist id={id} className="select-datalist">
+      <datalist id={id}>
         {options.map((option) => (
-          <option key={option.value ?? option} value={option.value ?? option} className="select-option">{option.label ?? ''}</option>
+          <option key={option.value ?? option} value={option.value ?? option}>{option.label ?? ''}</option>
         ))}
       </datalist>
     </div>
