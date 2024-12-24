@@ -12,6 +12,7 @@ const CustomerDetailsModal = ({
   customerDetails,
   togglePayModal,
 }) => {
+  console.log('customerDetails', customerDetails)
   const [activeTab, setActiveTab] = useState("debits");
   const closeModal = () => {
     setActiveTab("debits");
@@ -22,7 +23,7 @@ const CustomerDetailsModal = ({
     togglePayModal();
   }
   return (
-    <Modal maxWidth={"80%"} zIndex={9} show={isModalOpen} onClose={closeModal}>
+    <Modal width={"80%"} zIndex={9} show={isModalOpen} onClose={closeModal}>
       <Modal.Title width={"100%"}>Detalhes do cliente</Modal.Title>
       <Modal.Content width={"100%"}>
         <div className="clientes-modal-content">
@@ -87,6 +88,7 @@ const CustomerDetailsModal = ({
                 <Table.Head>
                   <Table.Cell>Data</Table.Cell>
                   <Table.Cell>Valor</Table.Cell>
+                  <Table.Cell>Loja</Table.Cell>
                   {/* TODO: add descrição */}
                   {/* <Table.Cell>Descrição</Table.Cell> */}
                   <Table.Cell>Ação</Table.Cell>
@@ -96,6 +98,7 @@ const CustomerDetailsModal = ({
                     <Table.Row key={index}>
                       <Table.Cell>{formatDate(debit.date)}</Table.Cell>
                       <Table.Cell>{formatMoney(debit.total)}</Table.Cell>
+                      <Table.Cell>{debit.Store.name}</Table.Cell>
                       {/* <Table.Cell>{debit.description}</Table.Cell> */}
                       <Table.Cell>
                         <Button
@@ -122,6 +125,7 @@ const CustomerDetailsModal = ({
                 <Table.Head>
                   <Table.Cell>Data</Table.Cell>
                   <Table.Cell>Valor</Table.Cell>
+                  <Table.Cell>Loja</Table.Cell>
                   {/* TODO: add descrição */}
                   {/* <Table.Cell>Descrição</Table.Cell> */}
                 </Table.Head>
@@ -130,6 +134,7 @@ const CustomerDetailsModal = ({
                     <Table.Row key={index}>
                       <Table.Cell>{formatDate(payment.paymentDate)}</Table.Cell>
                       <Table.Cell>{formatMoney(payment.amount)}</Table.Cell>
+                      <Table.Cell>{payment.Store.name}</Table.Cell>
                       {/* <Table.Cell>{payment.description}</Table.Cell> */}
                     </Table.Row>
                   ))}

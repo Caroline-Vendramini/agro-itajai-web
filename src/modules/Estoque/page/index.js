@@ -99,7 +99,7 @@ function Estoque() {
     try {
       const [response, brandsResponse, categoriesResponse] = await Promise.all([
         fetchData({
-          url: "products/store",
+          url: "products/store/products",
         }),
         fetchData({
           url: "brands",

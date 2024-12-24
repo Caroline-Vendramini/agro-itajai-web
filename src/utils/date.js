@@ -4,6 +4,6 @@ export const formatDate = (date) => {
 }
 
 // Função para formar a data em formato YYYY-MM-DD
-export const formatDateToISO = (date) => {
+export const formatDateToISO = (date = new Date()) => {
   return new Date(date).toISOString().split('T')[0];
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Modal.css';
 
-const Container = ({ show, onClose, children, zIndex, width, maxWidth }) => {
+const Container = ({ show, onClose, children, zIndex, width, maxWidth, height, minHeight }) => {
   if (!show) {
     return null;
   }
@@ -13,6 +13,8 @@ const Container = ({ show, onClose, children, zIndex, width, maxWidth }) => {
       <div className="modal-container" style={{
         width: width || 'auto',
         maxWidth: maxWidth || 'auto',
+        height: height || 'auto',
+        minHeight: minHeight || 'auto',
       }}>
         <button className="modal-close" onClick={onClose}>
           &times;
@@ -43,9 +45,9 @@ const Footer = ({ children, width }) => {
 
 // Exporta o componente Modal e os subcomponentes Title, Content e Footer no padrão de composition
 
-const Modal = ({ show, onClose, children, zIndex = 0, width, maxWidth }) => {
+const Modal = ({ show, onClose, children, zIndex = 0, width, maxWidth, height, minHeight }) => {
   return (
-    <Container zIndex={zIndex} show={show} onClose={onClose} width={width} maxWidth={maxWidth}>
+    <Container zIndex={zIndex} show={show} onClose={onClose} width={width} maxWidth={maxWidth} height={height} minHeight={minHeight}>
       {children}
     </Container>
   );

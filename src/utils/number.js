@@ -7,6 +7,6 @@ export const stringToNumber = (value) => {
   if (typeof value === "number") {
     return value;
   }
-  const result = parseFloat(value.replace(/\./g, "").replace(",", "."));
+  const result = parseFloat(value.replace(/\./g, "").replace(",", ".").replace(/[^\d.-]/g, ""));
   return ignoreNaN(result);
 };
