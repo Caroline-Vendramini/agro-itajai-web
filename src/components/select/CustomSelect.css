@@ -1,10 +1,8 @@
 .select-container {
-  margin: 4px;
-}
-
-.select-label {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 0px;
-  color: #0f132e;
+  .select-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0px;
+    color: #0f132e;
+  }
 }

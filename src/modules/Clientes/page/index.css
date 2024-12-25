@@ -7,6 +7,7 @@
     display: flex;
     width: 100%;
     margin-bottom: 20px;
+    gap: 8px;
 
     > .clientes-grow {
       flex-grow: 1;
@@ -23,6 +24,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     margin: 0 auto;
+    gap: 4px;
 
     .clientes-modal-header {
       display: flex;
@@ -73,5 +75,6 @@
   .clientes-tabs {
     display: flex;
     margin-bottom: 20px;
+    gap: 4px;
   }
 }

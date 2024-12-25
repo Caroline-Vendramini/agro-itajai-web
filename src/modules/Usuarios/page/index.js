@@ -66,7 +66,7 @@ function Usuarios() {
         return {
           ...user,
           action: (
-            <>
+            <div style={{ display: "flex", gap: "4px" }}>
               <Button
                 onClick={() => {
                   setUpdateUser(user);
@@ -84,7 +84,7 @@ function Usuarios() {
               >
                 Alterar senha
               </Button>
-            </>
+            </div>
           ),
         };
       });

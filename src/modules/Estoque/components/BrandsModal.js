@@ -50,7 +50,7 @@ const BrandsModal = ({
       >
         <Modal.Title>
           Marcas
-          <div>
+          <div style={{ display: "flex", marginRight: "4px" }}>
             <Button variant="success" onClick={() => toggleAddBrandModal()}>
               Nova marca
             </Button>

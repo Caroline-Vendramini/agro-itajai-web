@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  gap: 8px;
 
   & .estoque-search-area {
     display: flex;
     width: 100%;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    gap: 6px;
 
     > .estoque-grow {
       flex-grow: 1;
@@ -23,6 +25,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     margin: 0 auto;
+    gap: 4px;
 
     .estoque-modal-header {
       display: flex;
@@ -38,6 +41,7 @@
     .estoque-modal-content-register-inputs {
       display: flex;
       margin-top: 12px;
+      gap: 8px;
 
       .w1third690 {
         width: calc(690px / 3);
@@ -111,5 +115,6 @@
   .estoque-tabs {
     display: flex;
     margin-bottom: 20px;
+    gap: 4px;
   }
 }

@@ -4,7 +4,7 @@ import Input from "../../../components/input/Input";
 import Modal from "../../../components/modal/Modal";
 import CustomSelect from "../../../components/select/CustomSelect";
 import useAxios from "../../../hooks/useAxios";
-import { formatMoney, moneyMask } from "../../../utils/money";
+import { formatMoney } from "../../../utils/money";
 import { stringToNumber } from "../../../utils/number";
 
 const PaymentTypeModal = ({
@@ -98,7 +98,7 @@ const PaymentTypeModal = ({
         togglePaymentTypeModal();
       }}
       minHeight={minHeight}
-      width={"70%"}
+      maxWidth={"70%"}
     >
       <Modal.Title>Forma de pagamento</Modal.Title>
       <Modal.Content>

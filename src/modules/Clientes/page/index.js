@@ -87,7 +87,7 @@ function Clientes() {
           ...customer,
           debit: formatMoney(customer.totalDebit - customer.totalDebitPaid),
           action: (
-            <>
+            <div style={{ display: "flex", gap: "4px" }}>
               <Button onClick={() => handleCustomerDetails(customer)}>
                 Detalhes
               </Button>
@@ -100,7 +100,7 @@ function Clientes() {
               >
                 Editar
               </Button>
-            </>
+            </div>
           ),
         };
       });

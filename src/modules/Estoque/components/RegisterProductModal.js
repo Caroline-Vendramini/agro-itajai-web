@@ -24,6 +24,7 @@ const RegisterProductModal = ({
       show={registerProductModal}
       onClose={() => toggleRegisterProductModal()}
       width={"80%"}
+      maxWidth={"1152px"}
     >
       <Modal.Title>Cadastrar produto</Modal.Title>
       <Modal.Content>

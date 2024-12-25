@@ -50,7 +50,7 @@ const CategoriesModal = ({
       >
         <Modal.Title>
           Categorias
-          <div>
+          <div style={{ display: "flex", marginRight: "4px" }}>
             <Button variant="success" onClick={() => toggleAddCategoryModal()}>
               Nova categoria
             </Button>

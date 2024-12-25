@@ -125,7 +125,7 @@ const RegisterOrderModal = ({
       unitPrice: formatMoney(product.price),
       total: formatMoney(product.price * quantity),
       action: (
-        <>
+        <div style={{ display: "flex", gap: "6px" }}>
           <Button
             small
             onClick={() => {
@@ -159,7 +159,7 @@ const RegisterOrderModal = ({
           >
             Remover
           </Button>
-        </>
+        </div>
       ),
     };
     setItems([...items, item]);

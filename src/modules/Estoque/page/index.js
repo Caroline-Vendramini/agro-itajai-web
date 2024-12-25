@@ -120,7 +120,7 @@ function Estoque() {
           price: formatMoney(product.price),
           profit: profitMargin(product.cost, product.price),
           action: (
-            <>
+            <div style={{ display: "flex", gap: "2px" }}>
               <Button
                 small
                 onClick={() => {
@@ -183,7 +183,7 @@ function Estoque() {
               >
                 -
               </Button>
-            </>
+            </div>
           ),
         };
       });
@@ -493,7 +493,7 @@ function Estoque() {
 
         <Typography variant={"h3"}>Estoque</Typography>
 
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", gap: "6px" }}>
           <Button onClick={handleCategoryClick} variant="warning">Categorias</Button>
           <Button onClick={handleBrandClick} variant="warning">Marcas</Button>
         </div>

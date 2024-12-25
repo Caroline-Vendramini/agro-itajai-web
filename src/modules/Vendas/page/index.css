@@ -7,6 +7,7 @@
     display: flex;
     width: 100%;
     margin-bottom: 20px;
+    gap: 8px;
 
     > .vendas-grow {
       flex-grow: 1;
@@ -39,11 +40,12 @@
       display: flex;
       margin-top: 12px;
       align-items: flex-end;
+      gap: 6px;
 
       .vendas-select-grow {
         /* format select html element */
         width: 100%;
-        margin-right: 10px;
+        /* margin-right: 10px; */
       }
     }
   }
@@ -108,16 +110,18 @@
   .vendas-modal-content-payment {
     display: flex;
     flex-direction: column;
+    gap: 6px;
 
     .vendas-modal-content-register-inputs {
       display: flex;
       margin-top: 12px;
       align-items: flex-end;
+      gap: 8px;
 
       .vendas-select-grow {
         /* format select html element */
         width: 100%;
-        margin-right: 10px;
+        /* margin-right: 10px; */
       }
 
       .w350 {

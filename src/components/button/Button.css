@@ -4,9 +4,7 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-
-  /* TODO: Remover margin do botão. A margem deve estar no elemento pai do botão */
-  margin: 4px;
+  margin: 0;
 }
 
 .button-primary {

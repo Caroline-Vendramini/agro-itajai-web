@@ -18,7 +18,7 @@ const ProductDetailsModal = ({
   }
 
   return (
-    <Modal maxWidth={"95%"} zIndex={9} show={isModalOpen} onClose={closeModal}>
+    <Modal width={"95%"} zIndex={9} show={isModalOpen} onClose={closeModal}>
       <Modal.Title width={"100%"}>{productDetails?.name}</Modal.Title>
       <Modal.Content width={"100%"}>
         <div className="estoque-modal-content">
