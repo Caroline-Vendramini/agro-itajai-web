@@ -6,7 +6,7 @@ import { TOKEN } from "./constants";
 import useStorage from "./hooks/useStorage";
 import Clientes from "./modules/Clientes/page";
 import Configuracoes from "./modules/Configuracoes/page";
-import Contabilidade from "./modules/Contabilidade/page";
+import Caixa from "./modules/Caixa/page";
 import Dashboard from "./modules/Dashboard/page";
 import Estoque from "./modules/Estoque/page";
 import Login from "./modules/Login/page";
@@ -63,9 +63,9 @@ function RoutesApp() {
                         }
                     />
                     <Route
-                        path="/contabilidade"
+                        path="/caixa"
                         element={
-                            <ProtectedRoute isLogged={isLogged} element={<Contabilidade />} />
+                            <ProtectedRoute isLogged={isLogged} element={<Caixa />} />
                         }
                     />
                     <Route

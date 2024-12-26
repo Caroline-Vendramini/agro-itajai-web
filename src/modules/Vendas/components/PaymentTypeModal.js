@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import Modal from "../../../components/modal/Modal";
@@ -24,6 +24,7 @@ const PaymentTypeModal = ({
   const [minHeight, setMinHeight] = useState(null);
   const [discount, setDiscount] = useState(0);
   const [totalWithDiscount, setTotalWithDiscount] = useState(total);
+  const [customerDebit, setCustomerDebit] = useState(0);
 
   useEffect(() => {
     const newTotal = formatMoney(
@@ -36,15 +37,17 @@ const PaymentTypeModal = ({
     setChange(newChange);
   }, [total])
 
-  const { fetchData } = useAxios();
-
   useEffect(() => {
-    console.log(searchCustomers)
-    const customer = customers.find(
+    const cus = customers.find(
       (customer) => customer.id === searchCustomers?.value
-    );
-    console.log(customer)
-  }, [searchCustomers]);
+    )
+    if (cus) {
+      const totalDebit = cus?.totalDebit - cus.totalDebitPaid;
+      setCustomerDebit(totalDebit)
+    }
+  }, [searchCustomers])
+
+  const { fetchData } = useAxios();
 
   useEffect(() => {
     const fetchPaymentTypes = async () => {
@@ -87,6 +90,7 @@ const PaymentTypeModal = ({
     setShowCashInput(false);
     setCustomerRequired(false);
     setSearchCustomers(null);
+    setCustomerDebit(0);
   }
 
   return (
@@ -162,6 +166,11 @@ const PaymentTypeModal = ({
               onMenuOpen={() => setMinHeight("355px")}
             />
           </div>
+          {customerDebit > 0 && (
+            <span className="vendas-modal-content-register-inputs-discount" style={{ marginBottom: "10px", color: "red" }}>
+              Débito do cliente: {formatMoney(customerDebit)}
+            </span>
+          )}
           <div className="vendas-modal-content-register-inputs">
             <Input
               outerClassname="w350"
@@ -188,7 +197,7 @@ const PaymentTypeModal = ({
             <Input
               outerClassname="w350"
               name="total"
-              disabled
+              readOnly
               value={formatMoney(totalWithDiscount)}
               label="Total"
             />

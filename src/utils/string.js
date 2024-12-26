@@ -5,5 +5,5 @@ export const removeSpecialCharacters = (str) => {
 
 // Função que busca uma string em outra, ignorando acentos e caracteres especiais
 export const searchString = (str, search) => {
-  return removeSpecialCharacters(str).includes(removeSpecialCharacters(search));
+  return removeSpecialCharacters(str || '').includes(removeSpecialCharacters(search || ''));
 }

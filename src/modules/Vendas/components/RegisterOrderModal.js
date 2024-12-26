@@ -54,7 +54,6 @@ const RegisterOrderModal = ({
 
   const removeItem = (id) => {
     setItems((prevItems) => {
-      console.log(prevItems);
       return prevItems.filter((item) => item.id !== id);
     });
   };
@@ -62,7 +61,7 @@ const RegisterOrderModal = ({
   const addItem = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const quantity = +formData.get("quantity");
+    const quantity = +formData.get("quantity").replace(",", ".");
     const productId = searchProduct.value;
 
     // Quantidade deve ser maior que 0
@@ -168,6 +167,7 @@ const RegisterOrderModal = ({
   const handleOpenPaymentTypeSelect = () => {
     togglePaymentTypeModal();
   };
+
   return (
     <>
       <PaymentTypeModal

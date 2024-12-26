@@ -1,14 +1,35 @@
-import React from "react";
-import { Link, Navigate, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { SELECTED_UNIT_ID, TOKEN } from "../../constants";
 import useStorage from "../../hooks/useStorage";
 import "./Layout.css";
 import { useUnit } from "../../hooks/useUnit";
 
+const routes = [
+  { path: "/", label: "Início", key: "home" },
+  { path: "/vendas", label: "Vendas", key: "vendas" },
+  { path: "/clientes", label: "Clientes", key: "clientes" },
+  { path: "/caixa", label: "Caixa", key: "caixa" },
+  { path: "/estoque", label: "Estoque", key: "estoque" },
+  { path: "/usuarios", label: "Usuário", key: "usuarios" },
+  { path: "/configuracoes", label: "Configurações", key: "configuracoes" },
+];
+
 const Layout = () => {
   const { storedValue, removeValue } = useStorage(TOKEN, "");
   const { selectedUnit, setSelectedUnit, units } = useUnit();
   const { setValue } = useStorage(SELECTED_UNIT_ID, null);
+  const [activeTab, setActiveTab] = useState("home");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setActiveTab("home");
+    } else {
+      setActiveTab(location.pathname.replace("/", ""));
+    }
+  }, [location]);
 
   const handleLogoutClick = () => {
     removeValue();
@@ -35,27 +56,12 @@ const Layout = () => {
       <aside className="sidebar">
         <nav>
           <ul>
-            <li>
-              <Link to="/">Início</Link>
-            </li>
-            <li>
-              <Link to="/vendas">Vendas</Link>
-            </li>
-            <li>
-              <Link to="/clientes">Clientes</Link>
-            </li>
-            <li>
-              <Link to="/contabilidade">Contabilidade</Link>
-            </li>
-            <li>
-              <Link to="/estoque">Estoque</Link>
-            </li>
-            <li>
-              <Link to="/usuarios">Usuário</Link>
-            </li>
-            <li>
-              <Link to="/configuracoes">Configurações</Link>
-            </li>
+            {routes.map(route => (
+              <li key={route.key} onClick={() => setActiveTab(route.key)}>
+                <Link to={route.path} className={activeTab === route.key ? "route-tab-active" : ""}>{route.label}</Link>
+              </li>
+            ))}
+
             <li>
               <Link onClick={handleLogoutClick}>Sair</Link>
             </li>

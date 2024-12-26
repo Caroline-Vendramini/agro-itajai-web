@@ -52,7 +52,6 @@ function Clientes() {
 
   const handleCustomerDetails = useCallback(
     (customer) => {
-      console.log("Detalhes do cliente", customer);
       setCustomerDetails(customer);
       toggleModal();
     },

@@ -12,7 +12,6 @@ const CustomerDetailsModal = ({
   customerDetails,
   togglePayModal,
 }) => {
-  console.log('customerDetails', customerDetails)
   const [activeTab, setActiveTab] = useState("debits");
   const closeModal = () => {
     setActiveTab("debits");
