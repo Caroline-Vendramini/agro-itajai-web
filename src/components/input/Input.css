@@ -1,14 +1,14 @@
 .input-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
-  margin: 4px;
+  /* margin-bottom: 16px; */
+  /* margin: 4px; */
 }
 
 .input-label {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
   color: #0f132e;
 }
 

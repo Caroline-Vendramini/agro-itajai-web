@@ -21,6 +21,7 @@ const SelectExample = () => {
     setSelectedOption(selected.target.value);
   };
 
+  // TODO refact
   return (
     <Select
       id={'select'}

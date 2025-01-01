@@ -4,7 +4,7 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  margin: 4px;
+  margin: 0;
 }
 
 .button-primary {
@@ -17,16 +17,55 @@
   color: #eaeaea;
 }
 
-.button-primary:hover {
-  opacity: 0.8;
+.button-info {
+  background-color: #536d88;
+  color: #eaeaea;
+}
+
+.button-success {
+  background-color: #4caf50;
+  color: #eaeaea;
+}
+
+.button-warning {
+  background-color: #ff9800;
+  color: #19274e;
+}
+
+.button-danger {
+  background-color: #f44336;
+  color: #eaeaea;
 }
 
 .button-cancel:hover {
-  opacity: 0.8;
   background-color: #ac5858;
 }
 
+.button-primary:hover,
+.button-cancel:hover,
+.button-info:hover,
+.button-success:hover,
+.button-warning:hover,
+.button-danger:hover {
+  opacity: 0.8;
+}
+
 .button-primary:active,
-.button-cancel:active {
+.button-cancel:active,
+.button-info:active,
+.button-success:active,
+.button-warning:active,
+.button-danger:active {
   opacity: 0.6;
+}
+
+.button-small {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+/* aplica efeito caso esteja disabled */
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

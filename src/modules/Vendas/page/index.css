@@ -1,0 +1,137 @@
+.vendas-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & .vendas-search-area {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    gap: 8px;
+
+    > .vendas-grow {
+      flex-grow: 1;
+    }
+  }
+
+  .vendas-modal-content-register {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+
+    .vendas-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+
+      h4 {
+        margin-right: 10px;
+      }
+    }
+
+    .vendas-modal-content-register-inputs {
+      display: flex;
+      margin-top: 12px;
+      align-items: flex-end;
+      gap: 6px;
+
+      .vendas-select-grow {
+        /* format select html element */
+        width: 100%;
+        /* margin-right: 10px; */
+      }
+    }
+  }
+
+  .vendas-modal-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+
+    .vendas-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+
+      h4 {
+        margin-right: 10px;
+      }
+
+      .vendas-modal-info-pay {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .vendas-modal-info {
+      display: flex;
+      flex-direction: column;
+
+      .vendas-modal-info-price-history {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        .vendas-modal-info-price-history-info {
+          display: flex;
+          justify-content: space-between;
+          /* margin-top: 10px; */
+
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .vendas-modal-content-payment {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .vendas-modal-content-register-inputs {
+      display: flex;
+      margin-top: 12px;
+      align-items: flex-end;
+      gap: 8px;
+
+      .vendas-select-grow {
+        /* format select html element */
+        width: 100%;
+        /* margin-right: 10px; */
+      }
+
+      .w350 {
+        width: 350px;
+      }
+    }
+  }
+
+  .vendas-tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+}

@@ -1,0 +1,189 @@
+.dashboard-container {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 20px;
+  padding: 20px;
+
+  .flex-space-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .font-green {
+    color: green;
+  }
+
+  .font-red {
+    color: red;
+  }
+
+  .dashboard-warning {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: rgba(255, 165, 0, 0.1);
+    border-radius: 5px;
+    color: #c76a1e;
+    font-size: 16px;
+
+    .dashboard-warning-title {
+      color: #c76a1e;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+
+  .flex-column {
+    display: flex;
+    flex-direction: column;
+  }
+  .dashboard-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .dashboard-cards-container-areas {
+      display: grid;
+      grid-template-areas:
+        "paymenttypesales paymenttypesales paymenttypesales paymenttypesales receipts receipts receipts receipts"
+        "totalsaledtoday totalsaledtoday totaldiscount totaldiscount todayprofit todayprofit monthprofit monthprofit";
+      gap: 20px;
+    }
+
+    .dashboard-paymenttypesales {
+      grid-area: paymenttypesales;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-right: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(0, 128, 0, 0.1);
+    }
+
+    .dashboard-receipts {
+      grid-area: receipts;
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 128, 0.1);
+    }
+
+    .total-saled-today {
+      grid-area: totalsaledtoday;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 128, 0.1);
+    }
+
+    .total-discount {
+      grid-area: totaldiscount;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 128, 0.1);
+    }
+
+    .today-profit {
+      grid-area: todayprofit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(0, 128, 0, 0.1);
+    }
+
+    .month-profit {
+      grid-area: monthprofit;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(0, 128, 0, 0.1);
+    }
+  }
+
+  .gree-bold {
+    color: green;
+    font-weight: bold;
+  }
+
+  .red-bold {
+    color: red;
+    font-weight: bold;
+  }
+
+  .balance-details-modal-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+    gap: 4px;
+
+    .balance-details-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+
+      h4 {
+        margin-right: 10px;
+      }
+
+      .balance-details-modal-info-pay {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .balance-details-modal-info {
+      display: flex;
+      flex-direction: column;
+
+      .balance-details-modal-info-debits {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        .balance-details-modal-info-debits-info {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 10px;
+
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .balance-details-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 4px;
+  }
+}

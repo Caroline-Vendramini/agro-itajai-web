@@ -1,17 +1,41 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./modules/Login/page";
-import Dashboard from "./modules/Dashboard/page";
-import Vendas from "./modules/Vendas/page";
-import Clientes from "./modules/Clientes/page";
-import Contabilidade from "./modules/Contabilidade/page";
-import Usuarios from "./modules/Usuarios/page";
-import Estoque from "./modules/Estoque/page";
-import Configuracoes from "./modules/Configuracoes/page";
+import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
+import { TOKEN } from "./constants";
+import useStorage from "./hooks/useStorage";
+import Clientes from "./modules/Clientes/page";
+import Configuracoes from "./modules/Configuracoes/page";
+import Caixa from "./modules/Caixa/page";
+import Dashboard from "./modules/Dashboard/page";
+import Estoque from "./modules/Estoque/page";
+import Login from "./modules/Login/page";
+import Usuarios from "./modules/Usuarios/page";
+import Vendas from "./modules/Vendas/page";
 
 function RoutesApp() {
-    // TODO: Implementar a lógica de autenticação
-    const isLogged = true; // Simulando que o usuário está logado
+    const { storedValue: localToken, removeValue } = useStorage(TOKEN, "");
+    const [isLogged, setIsLogged] = useState(() => {
+        if (localToken) {
+            const decoded = jwtDecode(localToken);
+            const isExpired = decoded.exp * 1000 <= new Date().getTime();
+            return !isExpired
+        }
+        removeValue();
+        return false;
+    });
+
+    useEffect(() => {
+        if (localToken) {
+            const decoded = jwtDecode(localToken);
+            const isExpired = decoded.exp * 1000 <= new Date().getTime();
+            setIsLogged(!isExpired);
+            if (isExpired) {
+                removeValue();
+            }
+        }
+    }, [localToken, removeValue]);
+
     return (
         <BrowserRouter>
             <Routes>
@@ -39,9 +63,9 @@ function RoutesApp() {
                         }
                     />
                     <Route
-                        path="/contabilidade"
+                        path="/caixa"
                         element={
-                            <ProtectedRoute isLogged={isLogged} element={<Contabilidade />} />
+                            <ProtectedRoute isLogged={isLogged} element={<Caixa />} />
                         }
                     />
                     <Route
@@ -78,11 +102,7 @@ const PublicRoute = ({ isLogged, element }) => {
 };
 
 const NavigateTo = ({ isLogged }) => {
-    return !isLogged ? (
-        <Navigate to="/login" replace />
-    ) : (
-        <Navigate to="/" />
-    );
+    return !isLogged ? <Navigate to="/login" replace /> : <Navigate to="/" />;
 };
 
 export default RoutesApp;
