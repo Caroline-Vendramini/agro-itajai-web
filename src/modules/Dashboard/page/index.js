@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { GoAlert } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 import Button from "../../../components/button/Button";
 import Table from "../../../components/table/Table";
 import Typography from "../../../components/typography/Typography";
 import useAxios from "../../../hooks/useAxios";
+import useModal from "../../../hooks/useModal";
+import { getDataFromCaixa, seeBalanceDetails } from "../../../utils/balance";
 import { formatDate, formatDateToISO } from "../../../utils/date";
 import { formatMoney } from "../../../utils/money";
-import { useNavigate } from "react-router-dom";
-import './index.css'
+import BalanceDetailsModal from "../components/BalanceDetailsModal";
+import "./index.css";
 
 const columns = [
   { Header: "Data", accessor: "date" },
@@ -30,9 +33,14 @@ function Dashboard() {
   const [dayProfitPct, setDayProfitPct] = useState(0);
   const [monthProfit, setMonthProfit] = useState(0);
   const [monthProfitPct, setMonthProfitPct] = useState(0);
+  const [balanceDetails, setBalanceDetails] = useState(null);
 
   const { fetchData } = useAxios();
   const navigate = useNavigate();
+  const {
+    isModalOpen: isBalanceDetailsModalOpen,
+    toggleModal: toggleBalanceDetailsModalOpen,
+  } = useModal();
 
   useEffect(() => {
     const date = formatDateToISO(new Date());
@@ -48,9 +56,9 @@ function Dashboard() {
         .catch((error) => {
           console.error(error);
         });
-    }
-    fn()
-  }, [])
+    };
+    fn();
+  }, []);
 
   const fetchCaixas = async () => {
     const response = await fetchData({
@@ -60,39 +68,20 @@ function Dashboard() {
       const date = formatDateToISO(caixa.date);
       const isCurrent = !caixa.closed && date === formatDateToISO(new Date());
       if (isCurrent) {
-        const orders = caixa.Orders;
-        let moneyOrders = 0;
-        let discount = 0;
-        const totalPrice = caixa.amount;
-        let totalCost = 0;
-        const ordersByPaymentMethod = orders.reduce((acc, curr) => {
-          const paymentMethod = curr.PaymentType.name;
-          if (!acc[paymentMethod]) {
-            acc[paymentMethod] = 0;
-          }
-          if (paymentMethod === "Dinheiro") {
-            moneyOrders += curr.total;
-          }
-          totalCost = curr.Items.reduce((a, c) => a + c.unitCost * c.quantity, 0);
-          // Items.unitCost * curr.Items.quantity;
-          discount += curr.discount;
-          acc[paymentMethod] += curr.total;
-          return acc;
-        }, {});
-
-        const _debitPaymentsToday = caixa.DebitPayment.reduce(
-          (acc, curr) => acc + curr.amount,
-          0
-        );
-        setDayProfitPct((totalPrice - totalCost) / totalPrice);
-        setDayProfit(totalPrice - totalCost);
-        setTotalDiscount(discount);
-        setDebitPaymentsToday(_debitPaymentsToday);
+        const {
+          totalPrice,
+          totalCost,
+          discount,
+          debitPaymentsToday,
+          moneyOrders,
+          ordersByPaymentMethodForTheDay,
+        } = getDataFromCaixa(caixa);
         setMoneyOrders(moneyOrders);
-        setOrdersByPaymentMethod(Object.entries(ordersByPaymentMethod).map(([item, value]) => ({
-          item,
-          value,
-        })));
+        setDebitPaymentsToday(debitPaymentsToday);
+        setTotalDiscount(discount);
+        setOrdersByPaymentMethod(ordersByPaymentMethodForTheDay);
+        setDayProfit(totalPrice - totalCost);
+        setDayProfitPct((totalPrice - totalCost) / totalPrice);
         setCurrentCaixa(caixa);
       } else if (!caixa.closed) {
         setOpenCaixas((prev) => [...prev, caixa]);
@@ -107,7 +96,17 @@ function Dashboard() {
           caixa.CashOuts.reduce((acc, curr) => acc + curr.amount, 0)
         ),
         closed: caixa.closed ? "Sim" : "Não",
-        details: <Button>Detalhes</Button>,
+        details: (
+          <Button
+            onClick={() => {
+              const details = seeBalanceDetails(caixa);
+              setBalanceDetails(details);
+              toggleBalanceDetailsModalOpen();
+            }}
+          >
+            Detalhes
+          </Button>
+        ),
       };
     });
     setCaixas(newCaixas);
@@ -144,9 +143,13 @@ function Dashboard() {
           date: formatDateToISO(new Date()),
         },
       });
+      alert("Caixa aberto com sucesso");
+      return window.location.reload();
     } catch (error) {
       if (error.response.status === 409) {
-        const choice = window.confirm("Você já fechou o caixa de hoje, deseja reabri-lo?");
+        const choice = window.confirm(
+          "Você já fechou o caixa de hoje, deseja reabri-lo?"
+        );
         const cashBalance = error.response.data.cashBalance;
         if (choice) {
           // call api to reopen caixa
@@ -171,14 +174,13 @@ function Dashboard() {
     }
   }
 
-  const handleCloseCaixaClick = async () => {
+  const handleCloseCaixaClick = async (id) => {
     // call api to close caixa
     fetchData({
-      url: `/cash-balance/${currentCaixa.id}/close`,
+      url: `/cash-balance/${id}/close`,
       method: "PATCH",
     })
       .then(() => {
-        setCurrentCaixa(null);
         alert("Caixa fechado com sucesso");
         return window.location.reload();
       })
@@ -188,25 +190,35 @@ function Dashboard() {
   };
 
   return (
-    <div
-      className="dashboard-container"
-    >
+    <div className="dashboard-container">
+      <BalanceDetailsModal
+        toggleModal={toggleBalanceDetailsModalOpen}
+        isModalOpen={isBalanceDetailsModalOpen}
+        balanceDetails={balanceDetails}
+        date={balanceDetails?.date}
+        closeBalance={handleCloseCaixaClick}
+      />
       <div className="flex-space-between">
-        <Typography variant={"h3"}>Dashboard -
+        <Typography variant={"h3"}>
+          Dashboard -
           {currentCaixa ? (
             <span className="font-green"> Caixa aberto</span>
           ) : (
             <span className="font-red"> Caixa fechado</span>
           )}
         </Typography>
-        <Button variant="success" onClick={handleNewSaleClick}>
-          Nova venda
-        </Button>
+        {currentCaixa && (
+          <Button variant="success" onClick={handleNewSaleClick}>
+            Nova venda
+          </Button>
+        )}
       </div>
 
       {currentCaixa ? (
         <div className="flex-space-between">
-          <Button onClick={handleCloseCaixaClick}>Fechar caixa</Button>
+          <Button onClick={() => handleCloseCaixaClick(currentCaixa.id)}>
+            Fechar caixa
+          </Button>
         </div>
       ) : (
         <div className="flex-space-between">
@@ -215,9 +227,7 @@ function Dashboard() {
       )}
 
       {openCaixas.length > 0 && (
-        <div
-          className="dashboard-warning"
-        >
+        <div className="dashboard-warning">
           <GoAlert color="#c76a1e" fontSize={48} />
           <div className="flex-column">
             <span className="dashboard-warning-title">Atenção</span>
@@ -229,22 +239,13 @@ function Dashboard() {
         </div>
       )}
 
-      <div
-        className="dashboard-cards-container"
-      >
-        <div
-          className="dashboard-cards-container-areas"
-        >
-          <div
-            className="dashboard-paymenttypesales"
-          >
+      <div className="dashboard-cards-container">
+        <div className="dashboard-cards-container-areas">
+          <div className="dashboard-paymenttypesales">
             <Typography variant={"h5"}>Venda por forma de pagamento</Typography>
             <ul style={{ listStyle: "none", padding: 0 }}>
               {ordersByPaymentMethod.map(({ item, value }) => (
-                <li
-                  key={item}
-                  className="flex-space-between"
-                >
+                <li key={item} className="flex-space-between">
                   <Typography variant={"span"} style={{ fontSize: "14px" }}>
                     {item}
                   </Typography>
@@ -260,8 +261,7 @@ function Dashboard() {
               ))}
             </ul>
           </div>
-          <div className="dashboard-receipts"
-          >
+          <div className="dashboard-receipts">
             <div className="flex-column">
               <div
                 style={{
@@ -272,29 +272,19 @@ function Dashboard() {
               >
                 <Typography variant={"h5"}>Recebimentos</Typography>
                 <ul style={{ listStyle: "none", padding: 0 }}>
-                  <li
-                    className="flex-space-between"
-                  >
+                  <li className="flex-space-between">
                     <Typography variant={"span"} style={{ fontSize: "14px" }}>
                       Vendas em dinheiro
                     </Typography>
-                    <Typography
-                      variant={"span"}
-                      className="gree-bold"
-                    >
+                    <Typography variant={"span"} className="gree-bold">
                       {formatMoney(moneyOrders)}
                     </Typography>
                   </li>
-                  <li
-                    className="flex-space-between"
-                  >
+                  <li className="flex-space-between">
                     <Typography variant={"span"} style={{ fontSize: "14px" }}>
                       Pagamento de fiados
                     </Typography>
-                    <Typography
-                      variant={"span"}
-                      className="gree-bold"
-                    >
+                    <Typography variant={"span"} className="gree-bold">
                       {formatMoney(debitPaymentsToday)}
                     </Typography>
                   </li>
@@ -307,19 +297,16 @@ function Dashboard() {
             title="Lembre-se de que o lucro bruto não é o lucro líquido. O lucro bruto é o valor total das vendas menos o custo dos produtos vendidos. Você ainda precisa subtrair as despesas operacionais, como aluguel, água, luz e impostos, para calcular o lucro líquido."
           >
             <Typography variant={"h5"}>Total vendido hoje</Typography>
-            <span
-              className="gree-bold"
-            >
+            <span className="gree-bold">
               {formatMoney(currentCaixa?.amount)}
             </span>
           </div>
-          <div className="total-discount"
+          <div
+            className="total-discount"
             title="Lembre-se de que o lucro bruto não é o lucro líquido. O lucro bruto é o valor total das vendas menos o custo dos produtos vendidos. Você ainda precisa subtrair as despesas operacionais, como aluguel, água, luz e impostos, para calcular o lucro líquido."
           >
             <Typography variant={"h5"}>Total de desconto concedido</Typography>
-            <span
-              className={totalDiscount > 0 ? "red-bold" : ''}
-            >
+            <span className={totalDiscount > 0 ? "red-bold" : ""}>
               {formatMoney(totalDiscount)}
             </span>
           </div>
@@ -329,9 +316,7 @@ function Dashboard() {
               Você ainda precisa subtrair as despesas operacionais, como aluguel, água, luz e impostos, para calcular o lucro líquido."
           >
             <Typography variant={"h5"}>Lucro bruto do dia</Typography>
-            <span
-              className="gree-bold"
-            >
+            <span className="gree-bold">
               {formatMoney(dayProfit)} ({(dayProfitPct * 100).toFixed(2)}%)
             </span>
           </div>
@@ -340,9 +325,7 @@ function Dashboard() {
             title="Lembre-se de que o lucro bruto não é o lucro líquido. O lucro bruto é o valor total das vendas menos o custo dos produtos vendidos. Você ainda precisa subtrair as despesas operacionais, como aluguel, água, luz e impostos, para calcular o lucro líquido."
           >
             <Typography variant={"h5"}>Lucro bruto do mês</Typography>
-            <span
-              className="gree-bold"
-            >
+            <span className="gree-bold">
               {formatMoney(monthProfit)} ({(monthProfitPct * 100).toFixed(2)}%)
             </span>
           </div>

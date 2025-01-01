@@ -1,20 +1,21 @@
+import { ptBR } from "date-fns/locale";
 import { useCallback, useEffect, useState } from "react";
-import { useLoader } from "../../../hooks/useLoader";
-import useAxios from "../../../hooks/useAxios";
-import { searchString } from "../../../utils/string";
-import Typography from "../../../components/typography/Typography";
-import Input from "../../../components/input/Input";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../../components/button/Button";
+import Input from "../../../components/input/Input";
 import Table from "../../../components/table/Table";
-import "./index.css";
-import RegisterOrderModal from "../components/RegisterOrderModal";
+import Typography from "../../../components/typography/Typography";
+import useAxios from "../../../hooks/useAxios";
+import { useLoader } from "../../../hooks/useLoader";
 import useModal from "../../../hooks/useModal";
 import { formatDate, formatDateToISO } from "../../../utils/date";
 import { formatMoney } from "../../../utils/money";
-import { DayPicker } from "react-day-picker";
-import { ptBR } from 'date-fns/locale';
-import "react-day-picker/style.css";
-import { useLocation, useNavigate, useNavigation } from "react-router-dom";
+import { searchString } from "../../../utils/string";
+import OrderDetailsModal from "../components/OrderDetailsModal";
+import RegisterOrderModal from "../components/RegisterOrderModal";
+import "./index.css";
 
 const columns = [
   { Header: "#", accessor: "id" },
@@ -26,10 +27,9 @@ const columns = [
   { Header: "Ação", accessor: "action" },
 ];
 function Vendas() {
-
   const { showLoader, hideLoader } = useLoader();
   const { fetchData } = useAxios();
-  const location = useLocation()
+  const location = useLocation();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
@@ -37,11 +37,16 @@ function Vendas() {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [showSelectDay, setShowSelectDay] = useState(false);
+  const [orderDetails, setOrderDetails] = useState(null);
 
   const {
     isModalOpen: registerOrderModal,
     toggleModal: toggleRegisterOrderModal,
   } = useModal(location.state?.newSale);
+  const {
+    isModalOpen: isOrderDetailsModalOpen,
+    toggleModal: toggleOrderDetailsModalOpen,
+  } = useModal();
 
   useEffect(() => {
     if (location.state?.newSale) {
@@ -69,7 +74,6 @@ function Vendas() {
     hideLoader();
   }, [search, orders]);
 
-
   useEffect(() => {
     handleSearch();
   }, [orders, handleSearch]);
@@ -77,7 +81,7 @@ function Vendas() {
   const fetchOrders = useCallback(async () => {
     showLoader();
     try {
-      const date = formatDateToISO(selectedDate)
+      const date = formatDateToISO(selectedDate);
       const response = await fetchData({
         url: `order/date/${date}/order`,
       });
@@ -89,9 +93,19 @@ function Vendas() {
           total: formatMoney(order.total),
           discount: formatMoney(order.discount),
           paymentType: order.PaymentType.name,
-          action: <>
-            <Button variant="warning">Detalhes</Button>
-          </>,
+          action: (
+            <>
+              <Button
+                onClick={() => {
+                  setOrderDetails(order);
+                  toggleOrderDetailsModalOpen();
+                }}
+                variant="warning"
+              >
+                Detalhes
+              </Button>
+            </>
+          ),
         };
       });
       setOrders(mappedOrders);
@@ -100,9 +114,7 @@ function Vendas() {
       console.error(error);
     }
     hideLoader();
-  }, [
-    selectedDate
-  ]);
+  }, [selectedDate]);
 
   useEffect(() => {
     fetchOrders();
@@ -118,7 +130,7 @@ function Vendas() {
         productId: item.id,
         quantity: item.quantity,
       };
-    })
+    });
 
     const data = {
       customerId,
@@ -126,22 +138,29 @@ function Vendas() {
       discount,
       orderItems,
       date: formatDateToISO(),
-    }
+    };
 
     fetchData({
       url: "/order",
       method: "POST",
       data,
-    }).then(() => {
-      fetchOrders();
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
+    })
+      .then(() => {
+        fetchOrders();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
       <div className="vendas-container">
+        <OrderDetailsModal
+          orderDetails={orderDetails}
+          showModal={isOrderDetailsModalOpen}
+          toggleRegisterOrderModal={toggleOrderDetailsModalOpen}
+        />
         <RegisterOrderModal
           registerOrderModal={registerOrderModal}
           toggleRegisterOrderModal={toggleRegisterOrderModal}
@@ -159,13 +178,23 @@ function Vendas() {
             Nova venda
           </Button>
         </div>
-        <div style={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "space-between" }}>
-          <Typography variant={'h5'}>Vendas do dia: {formatDate(selectedDate)}</Typography>
-          <Button onClick={() => setShowSelectDay(!showSelectDay)}>Selecionar dia</Button>
-
+        <div
+          style={{
+            display: "flex",
+            gap: "8px",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant={"h5"}>
+            Vendas do dia: {formatDate(selectedDate)}
+          </Typography>
+          <Button onClick={() => setShowSelectDay(!showSelectDay)}>
+            Selecionar dia
+          </Button>
         </div>
-        {
-          showSelectDay && (<DayPicker
+        {showSelectDay && (
+          <DayPicker
             locale={ptBR} // Define o idioma para Português do Brasil
             timeZone="America/Sao_Paulo"
             mode="single"
@@ -174,8 +203,8 @@ function Vendas() {
               setSelectedDate(e);
               setShowSelectDay(false);
             }}
-          />)
-        }
+          />
+        )}
 
         <Table>
           <Table.Head>

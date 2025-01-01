@@ -122,4 +122,68 @@
     color: red;
     font-weight: bold;
   }
+
+  .balance-details-modal-content {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 0 auto;
+    gap: 4px;
+
+    .balance-details-modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0;
+      position: relative;
+
+      h4 {
+        margin-right: 10px;
+      }
+
+      .balance-details-modal-info-pay {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .balance-details-modal-info {
+      display: flex;
+      flex-direction: column;
+
+      .balance-details-modal-info-debits {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        .balance-details-modal-info-debits-info {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 10px;
+
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .balance-details-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 4px;
+  }
 }

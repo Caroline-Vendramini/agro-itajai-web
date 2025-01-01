@@ -16,11 +16,11 @@ const CustomerDetailsModal = ({
   const closeModal = () => {
     setActiveTab("debits");
     toggleModal();
-  }
+  };
   const closePayModal = () => {
     setActiveTab("debits");
     togglePayModal();
-  }
+  };
   return (
     <Modal width={"80%"} zIndex={9} show={isModalOpen} onClose={closeModal}>
       <Modal.Title width={"100%"}>Detalhes do cliente</Modal.Title>
@@ -79,6 +79,13 @@ const CustomerDetailsModal = ({
             >
               Histórico de pagamentos
             </Button>
+            {/* <Button
+              variant={activeTab === "buy" ? "info" : "primary"}
+              onClick={() => setActiveTab("buy")}
+              className={activeTab === "buy" ? "active" : ""}
+            >
+              Histórico de compras
+            </Button> */}
           </div>
           {activeTab === "debits" && (
             <>
@@ -141,6 +148,29 @@ const CustomerDetailsModal = ({
               </Table>
             </>
           )}
+
+          {/* {activeTab === "buy" && (
+            <>
+              <Typography variant={"h5"}>Histórico de compras</Typography>
+              <Table>
+                <Table.Head>
+                  <Table.Cell>Data</Table.Cell>
+                  <Table.Cell>Valor</Table.Cell>
+                  <Table.Cell>Loja</Table.Cell>
+                  <Table.Cell>Ação</Table.Cell>
+                </Table.Head>
+                <Table.Body>
+                  {customerDetails?.debitsPaid.map((payment, index) => (
+                    <Table.Row key={index}>
+                      <Table.Cell>{formatDate(payment.paymentDate)}</Table.Cell>
+                      <Table.Cell>{formatMoney(payment.amount)}</Table.Cell>
+                      <Table.Cell>{payment.Store.name}</Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            </>
+          )} */}
         </div>
       </Modal.Content>
     </Modal>
