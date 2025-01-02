@@ -1,0 +1,28 @@
+.relatorios-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.relatorios-report-sections {
+  display: flex;
+  flex-direction: column;
+}
+
+.relatorios-report-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+  .relatorios-report-section-buttons {
+    display: flex;
+    margin-top: 10px;
+
+    button {
+      margin-left: 10px;
+    }
+  }
+}

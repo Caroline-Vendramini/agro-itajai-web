@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import { SELECTED_UNIT_ID, TOKEN } from "../../constants";
 import useStorage from "../../hooks/useStorage";
-import "./Layout.css";
 import { useUnit } from "../../hooks/useUnit";
+import "./Layout.css";
 
 const routes = [
   { path: "/", label: "Início", key: "home" },
@@ -12,6 +12,7 @@ const routes = [
   { path: "/caixa", label: "Caixa", key: "caixa" },
   { path: "/estoque", label: "Estoque", key: "estoque" },
   { path: "/usuarios", label: "Usuário", key: "usuarios" },
+  { path: "/relatorios", label: "Relatórios", key: "relatorios" },
   { path: "/configuracoes", label: "Configurações", key: "configuracoes" },
 ];
 

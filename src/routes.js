@@ -4,12 +4,13 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import { TOKEN } from "./constants";
 import useStorage from "./hooks/useStorage";
+import Caixa from "./modules/Caixa/page";
 import Clientes from "./modules/Clientes/page";
 import Configuracoes from "./modules/Configuracoes/page";
-import Caixa from "./modules/Caixa/page";
 import Dashboard from "./modules/Dashboard/page";
 import Estoque from "./modules/Estoque/page";
 import Login from "./modules/Login/page";
+import Reports from "./modules/Relatorios/page";
 import Usuarios from "./modules/Usuarios/page";
 import Vendas from "./modules/Vendas/page";
 
@@ -78,6 +79,12 @@ function RoutesApp() {
                         path="/usuarios"
                         element={
                             <ProtectedRoute isLogged={isLogged} element={<Usuarios />} />
+                        }
+                    />
+                    <Route
+                        path="/relatorios"
+                        element={
+                            <ProtectedRoute isLogged={isLogged} element={<Reports />} />
                         }
                     />
                     <Route
