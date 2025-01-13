@@ -2,7 +2,7 @@
 import Button from "../../../components/button/Button";
 import Modal from "../../../components/modal/Modal";
 import Typography from "../../../components/typography/Typography";
-import { formatMoney } from "../../../utils/money";
+import { formatMoney, profitMargin } from "../../../utils/money";
 
 const BalanceDetailsModal = ({
   isModalOpen,
@@ -137,15 +137,8 @@ const BalanceDetailsModal = ({
                     {formatMoney(
                       balanceDetails.totalPrice - balanceDetails.totalCost
                     )}{" "}
-                    (
-                    {(
-                      (balanceDetails.totalPrice
-                        ? (balanceDetails.totalPrice -
-                          balanceDetails.totalCost) /
-                        balanceDetails.totalPrice
-                        : 0) * 100
-                    ).toFixed(2)}
-                    %)
+
+                    ({profitMargin(balanceDetails.totalCost, balanceDetails.totalPrice)})
                   </span>
                 </div>
                 <div className="month-profit">

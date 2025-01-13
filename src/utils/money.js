@@ -66,13 +66,23 @@ export const ignoreNaN = (value) => {
   return value;
 };
 
-export const profitMargin = (cost, price) => {
-  const profit = roundToTwo(
+export const profitMargin = (cost, price, costBased = false) => {
+  let profit = roundToTwo(
     ignoreNaN(
       ((moneyToNumber(price) - moneyToNumber(cost)) / moneyToNumber(price)) *
       100
     )
   )
+
+  if (costBased) {
+    profit = roundToTwo(
+      ignoreNaN(
+        ((moneyToNumber(price) / moneyToNumber(cost)) - 1) *
+        100
+      )
+    )
+  }
+
   if (profit === Number.NEGATIVE_INFINITY) {
     return "Margem de lucro indefinida"
   }

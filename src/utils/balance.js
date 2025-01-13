@@ -12,7 +12,7 @@ export const getDataFromCaixa = (caixa) => {
     if (paymentMethod === "Dinheiro") {
       moneyOrders += curr.total;
     }
-    totalCost = curr.Items?.reduce((a, c) => a + c.unitCost * c.quantity, 0);
+    totalCost += curr.Items?.reduce((a, c) => a + c.unitCost * c.quantity, 0);
     discount += curr.discount;
     acc[paymentMethod] += curr.total;
     return acc;
@@ -40,7 +40,6 @@ export const getDataFromCaixa = (caixa) => {
 };
 
 export const seeBalanceDetails = (caixa) => {
-  console.log(caixa);
   const {
     totalPrice,
     totalCost,

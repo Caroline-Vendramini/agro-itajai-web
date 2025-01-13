@@ -28,7 +28,7 @@ const UpdateProductPriceModal = ({
               outerClassname="w350"
               name="profit"
               readOnly
-              value={profitMargin(updateProductPrice?.cost, updateProductPrice?.price)}
+              value={profitMargin(updateProductPrice?.cost, updateProductPrice?.price, true)}
               label={"Lucro (%)"}
             />
           </div>

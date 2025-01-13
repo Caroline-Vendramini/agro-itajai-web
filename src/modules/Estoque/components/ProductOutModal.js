@@ -56,7 +56,7 @@ const ProductOutModal = ({
               outerClassname="w1third690"
               name="profit"
               readOnly
-              value={profitMargin(productOut?.cost, productOut?.price)}
+              value={profitMargin(productOut?.cost, productOut?.price, true)}
               label={"Lucro (%)"}
             />
           </div>

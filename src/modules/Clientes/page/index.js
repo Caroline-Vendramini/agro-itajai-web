@@ -73,7 +73,7 @@ function Clientes() {
     );
     setFilteredCustomers(filtered);
     hideLoader();
-  }, [search, customers]);
+  }, [search, customers, hideLoader, showLoader]);
 
   const fetchCustomers = useCallback(async () => {
     showLoader();
@@ -104,7 +104,6 @@ function Clientes() {
         };
       });
       setCustomers(mappedCustomers);
-      handleSearch();
     } catch (error) {
       console.error(error);
     }
@@ -112,6 +111,9 @@ function Clientes() {
   }, [
     handleCustomerDetails,
     toggleUpdateCustomerModal,
+    fetchData,
+    hideLoader,
+    showLoader,
   ]);
 
   useEffect(() => {
@@ -157,6 +159,9 @@ function Clientes() {
       })
       .catch((error) => {
         console.error(error);
+        if (error.response.status === 404) {
+          alert('Caixa não encontrado ou fechado');
+        }
       });
   };
 
@@ -198,7 +203,7 @@ function Clientes() {
     e.preventDefault();
     const { name, nickname, phone, id } = updateCustomer
 
-    if (!name || !nickname || !phone) {
+    if (!name || !id) {
       alert("Preencha todos os campos");
       return;
     }

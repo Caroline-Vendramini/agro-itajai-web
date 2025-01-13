@@ -10,7 +10,7 @@ import Typography from "../../../components/typography/Typography";
 import useAxios from "../../../hooks/useAxios";
 import { useLoader } from "../../../hooks/useLoader";
 import useModal from "../../../hooks/useModal";
-import { formatDate, formatDateToISO } from "../../../utils/date";
+import { formatDate, formatDateToISO, formatDateToISOFromBR } from "../../../utils/date";
 import { formatMoney } from "../../../utils/money";
 import { searchString } from "../../../utils/string";
 import OrderDetailsModal from "../components/OrderDetailsModal";
@@ -35,9 +35,9 @@ function Vendas() {
   const [search, setSearch] = useState("");
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(location.state?.orderDetails?.date ? new Date(formatDateToISOFromBR(location.state.orderDetails?.date)) : new Date());
   const [showSelectDay, setShowSelectDay] = useState(false);
-  const [orderDetails, setOrderDetails] = useState(null);
+  const [orderDetails, setOrderDetails] = useState(location.state?.orderDetails?.order ?? null);
 
   const {
     isModalOpen: registerOrderModal,
@@ -46,13 +46,15 @@ function Vendas() {
   const {
     isModalOpen: isOrderDetailsModalOpen,
     toggleModal: toggleOrderDetailsModalOpen,
-  } = useModal();
+  } = useModal(location.state?.orderDetails?.order);
 
   useEffect(() => {
     if (location.state?.newSale) {
       navigate(location.pathname, { state: { newSale: false } });
+    } else if (location.state?.orderDetails?.order) {
+      navigate(location.pathname, { state: null });
     }
-  }, []);
+  }, [location.pathname, location.state?.newSale, location.state?.orderDetails, navigate]);
 
   const handleSearch = useCallback(() => {
     if (!search) {
@@ -72,7 +74,7 @@ function Vendas() {
     );
     setFilteredOrders(filtered);
     hideLoader();
-  }, [search, orders]);
+  }, [search, orders, hideLoader, showLoader]);
 
   useEffect(() => {
     handleSearch();
@@ -86,10 +88,11 @@ function Vendas() {
         url: `order/date/${date}/order`,
       });
       const mappedOrders = response.data.map((order) => {
+        const nickname = order.Customer?.nickname;
         return {
           ...order,
           date: formatDate(order.date),
-          customer: `${order.Customer.name} - ${order.Customer.nickname}`,
+          customer: `${order.Customer.name}${nickname ? ` - ${nickname}` : ''}`,
           total: formatMoney(order.total),
           discount: formatMoney(order.discount),
           paymentType: order.PaymentType.name,
@@ -109,12 +112,11 @@ function Vendas() {
         };
       });
       setOrders(mappedOrders);
-      handleSearch();
     } catch (error) {
       console.error(error);
     }
     hideLoader();
-  }, [selectedDate]);
+  }, [selectedDate, fetchData, hideLoader, showLoader, toggleOrderDetailsModalOpen]);
 
   useEffect(() => {
     fetchOrders();
@@ -159,7 +161,7 @@ function Vendas() {
         <OrderDetailsModal
           orderDetails={orderDetails}
           showModal={isOrderDetailsModalOpen}
-          toggleRegisterOrderModal={toggleOrderDetailsModalOpen}
+          toggleOrderDetailsModalOpen={toggleOrderDetailsModalOpen}
         />
         <RegisterOrderModal
           registerOrderModal={registerOrderModal}

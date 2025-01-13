@@ -1,11 +1,11 @@
 import defaultAxios from "axios";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { SELECTED_UNIT_ID, TOKEN } from "../constants";
 
 const useAxios = () => {
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async ({
+  const fetchData = useCallback(async ({
     url,
     method = "get",
     data = null,
@@ -34,7 +34,7 @@ const useAxios = () => {
     } finally {
       setLoading(false);
     }
-  }
+  }, [])
 
   return { loading, fetchData };
 };

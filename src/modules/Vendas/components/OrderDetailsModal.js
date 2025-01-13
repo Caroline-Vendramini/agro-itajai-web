@@ -15,9 +15,10 @@ const columns = [
 const OrderDetailsModal = ({
   orderDetails,
   showModal,
-  toggleRegisterOrderModal,
+  toggleOrderDetailsModalOpen,
 }) => {
   const [items, setItems] = useState([]);
+  const nickname = orderDetails?.Customer?.nickname
 
   useEffect(() => {
     if (orderDetails === null) return;
@@ -37,7 +38,7 @@ const OrderDetailsModal = ({
       <Modal
         zIndex={12}
         show={showModal}
-        onClose={() => toggleRegisterOrderModal()}
+        onClose={() => toggleOrderDetailsModalOpen()}
         width={"80%"}
       >
         <Modal.Title>Detalhes da venda #{orderDetails?.id}</Modal.Title>
@@ -49,9 +50,13 @@ const OrderDetailsModal = ({
         >
           <Typography variant="h5">
             Cliente: {orderDetails?.Customer.name}{" "}
-            <Typography variant="span">
-              ({orderDetails?.Customer.nickname})
-            </Typography>
+            {
+              nickname && (
+                <Typography variant="span">
+                  ({orderDetails?.Customer.nickname})
+                </Typography>
+              )
+            }
             <Typography variant="span">
               {" "}
               - {formatDate(orderDetails?.date || null)}

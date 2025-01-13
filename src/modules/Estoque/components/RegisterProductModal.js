@@ -1,8 +1,8 @@
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import Modal from "../../../components/modal/Modal";
-import Select from "../../../components/select/Select";
-import { formatMoney, ignoreNaN, moneyToNumber, profitMargin, roundToTwo } from "../../../utils/money";
+import CustomSelect from "../../../components/select/CustomSelect";
+import { formatMoney, profitMargin } from "../../../utils/money";
 
 const RegisterProductModal = ({
   registerProductModal,
@@ -71,30 +71,45 @@ const RegisterProductModal = ({
               outerClassname="w350"
               name="profit"
               readOnly
-              value={profitMargin(cost, price)}
+              value={profitMargin(cost, price, true)}
               label={"Lucro (%)"}
             />
           </div>
 
           <div className="estoque-modal-content-register-inputs">
-            <Select
-
-              outerClassname="w350"
+            <CustomSelect
+              className="w350"
               id={"brand"}
               name={"brand"}
-              label="Marca"
-              options={brands}
-              value={selectedBrand}
-              onChange={(e) => setSelectedBrand(e.target.value)}
+              placeholder="Marca"
+              label={"Marca"}
+              required
+              value={selectedBrand ? {
+                value: selectedBrand,
+                label: selectedBrand,
+              } : null}
+              onChange={(e) => setSelectedBrand(e.value)}
+              options={brands.map((brand) => ({
+                label: brand,
+                value: brand,
+              }))}
             />
-            <Select
-              outerClassname="w350"
+            <CustomSelect
+              className="w350"
               id={"category"}
               name={"category"}
-              label="Categoria"
-              options={categories}
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              placeholder="Categoria"
+              label={"Categoria"}
+              required
+              value={selectedCategory ? {
+                value: selectedCategory,
+                label: selectedCategory,
+              } : null}
+              onChange={(e) => setSelectedCategory(e.value)}
+              options={categories.map((category) => ({
+                label: category,
+                value: category,
+              }))}
             />
             <Input
               outerClassname="w350"

@@ -46,8 +46,8 @@
     .dashboard-cards-container-areas {
       display: grid;
       grid-template-areas:
-        "paymenttypesales paymenttypesales paymenttypesales paymenttypesales receipts receipts receipts receipts"
-        "totalsaledtoday totalsaledtoday totaldiscount totaldiscount todayprofit todayprofit monthprofit monthprofit";
+        " totaldiscount totaldiscount totaldiscount totaldiscount todayprofit todayprofit monthprofit monthprofit"
+        "paymenttypesales paymenttypesales paymenttypesales paymenttypesales receipts receipts auto auto";
       gap: 20px;
     }
 
@@ -116,11 +116,18 @@
   .gree-bold {
     color: green;
     font-weight: bold;
+
+    span {
+      color: #727272;
+    }
   }
 
   .red-bold {
     color: red;
     font-weight: bold;
+    span {
+      color: #727272;
+    }
   }
 
   .balance-details-modal-content {

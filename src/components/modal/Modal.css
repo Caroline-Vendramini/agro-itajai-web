@@ -19,6 +19,7 @@
   position: relative;
   overflow-y: auto;
   max-height: 80%;
+  overflow-y: inherit !important;
 }
 
 .modal-close {

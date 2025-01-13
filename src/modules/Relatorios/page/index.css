@@ -5,6 +5,35 @@
   background-color: #f9f9f9;
 }
 
+.relatorios-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.relatorios-h-40 {
+  height: 40px;
+}
+
+.relatorios-date-range {
+  display: flex;
+  gap: 10px;
+  .h6 {
+    margin-top: 10px;
+  }
+}
+
+.relatorios-date-range-picker {
+  right: 40px;
+  top: 130px;
+  position: absolute;
+  z-index: 1;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
 .relatorios-report-sections {
   display: flex;
   flex-direction: column;

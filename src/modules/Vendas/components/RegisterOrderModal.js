@@ -1,15 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../components/button/Button";
 import Input from "../../../components/input/Input";
 import Modal from "../../../components/modal/Modal";
-import Select from "../../../components/select/Select";
-import useAxios from "../../../hooks/useAxios";
-import Table from "../../../components/table/Table";
-import { stringToNumber } from "../../../utils/number";
-import { formatMoney } from "../../../utils/money";
-import useModal from "../../../hooks/useModal";
-import PaymentTypeModal from "./PaymentTypeModal";
 import CustomSelect from "../../../components/select/CustomSelect";
+import Table from "../../../components/table/Table";
+import useAxios from "../../../hooks/useAxios";
+import useModal from "../../../hooks/useModal";
+import { formatMoney } from "../../../utils/money";
+import { stringToNumber } from "../../../utils/number";
+import PaymentTypeModal from "./PaymentTypeModal";
 
 const columns = [
   { Header: "Produto", accessor: "product" },
@@ -50,7 +49,7 @@ const RegisterOrderModal = ({
       setProducts([]);
       setItems([]);
     };
-  }, [registerOrderModal]);
+  }, [registerOrderModal, fetchData]);
 
   const removeItem = (id) => {
     setItems((prevItems) => {
@@ -229,22 +228,24 @@ const RegisterOrderModal = ({
             </div>
           </form>
 
-          <Table>
-            <Table.Head>
-              {columns.map((column, index) => (
-                <Table.Cell key={index}>{column.Header}</Table.Cell>
-              ))}
-            </Table.Head>
-            <Table.Body>
-              {items.map((row, index) => (
-                <Table.Row key={index}>
-                  {columns.map((column, index) => (
-                    <Table.Cell key={index}>{row[column.accessor]}</Table.Cell>
-                  ))}
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+          <div className="vendas-table-div">
+            <Table tableClassname="fill-available">
+              <Table.Head>
+                {columns.map((column, index) => (
+                  <Table.Cell key={index}>{column.Header}</Table.Cell>
+                ))}
+              </Table.Head>
+              <Table.Body>
+                {items.map((row, index) => (
+                  <Table.Row key={index}>
+                    {columns.map((column, index) => (
+                      <Table.Cell key={index}>{row[column.accessor]}</Table.Cell>
+                    ))}
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
           <Button
             onClick={handleOpenPaymentTypeSelect}
             disabled={items.length === 0}

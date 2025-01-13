@@ -130,6 +130,15 @@
     }
   }
 
+  .vendas-table-div {
+    overflow-y: auto;
+    max-height: 300px;
+
+    .fill-available {
+      width: -webkit-fill-available;
+    }
+  }
+
   .vendas-tabs {
     display: flex;
     margin-bottom: 20px;

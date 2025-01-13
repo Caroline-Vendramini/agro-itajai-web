@@ -43,7 +43,8 @@ const ProductDetailsModal = ({
                 <Typography variant={"body1"}>
                   {profitMargin(
                     productDetails?.averageCost,
-                    productDetails?.averagePrice
+                    productDetails?.averagePrice,
+                    true
                   )}
                 </Typography>
               </div>
@@ -84,10 +85,10 @@ const ProductDetailsModal = ({
                       <Table.Cell>{formatDate(history.createdAt)}</Table.Cell>
                       <Table.Cell>{formatMoney(history.oldCost)}</Table.Cell>
                       <Table.Cell>{formatMoney(history.oldPrice)}</Table.Cell>
-                      <Table.Cell>{profitMargin(history.oldCost, history.oldPrice)}</Table.Cell>
+                      <Table.Cell>{profitMargin(history.oldCost, history.oldPrice, true)}</Table.Cell>
                       <Table.Cell>{formatMoney(history.newCost)}</Table.Cell>
                       <Table.Cell>{formatMoney(history.newPrice)}</Table.Cell>
-                      <Table.Cell>{profitMargin(history.newCost, history.newPrice)}</Table.Cell>
+                      <Table.Cell>{profitMargin(history.newCost, history.newPrice, true)}</Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>

@@ -1,9 +1,18 @@
+import { ptBR } from "date-fns/locale";
+import { useState } from "react";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
 import Button from "../../../components/button/Button";
 import Modal from "../../../components/modal/Modal";
 import Typography from "../../../components/typography/Typography";
+import useModal from "../../../hooks/useModal";
 import "./index.css";
 
 function Relatorios() {
+  const { isModalOpen, toggleModal } = useModal();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [showSelectRange, setShowSelectRange] = useState(false);
 
   const generateReport = async (type) => {
     // TODO: Implementar a geração de relatórios
@@ -20,20 +29,42 @@ function Relatorios() {
     // }
   };
 
-  const close = () => {
-    window.location.href = "/";
-  }
-
   return (
     <div className="relatorios-container">
-      <Modal show={true} onClose={close}>
+      <Modal show={isModalOpen} onClose={toggleModal}>
         <Modal.Title>Em Breve</Modal.Title>
         <Modal.Content>
           <Typography variant={"span"}>Em breve estas funcionalidades estarão disponíveis.</Typography>
-          <Button onClick={close}>OK</Button>
+          <Button onClick={toggleModal}>OK</Button>
         </Modal.Content>
       </Modal>
-      <Typography variant="h1">Relatórios</Typography>
+      <div className="relatorios-header">
+        <Typography variant="h1">Relatórios</Typography>
+
+        <div className="relatorios-date-range">
+          <Typography variant="h6">
+            {`Período selecionado: ${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}`}
+          </Typography>
+          <Button className="relatorios-h-40" onClick={() => setShowSelectRange(!showSelectRange)}>
+            Selecionar período
+          </Button>
+          {showSelectRange && (
+            <div className="relatorios-date-range-picker">
+              <DayPicker
+                locale={ptBR} // Define o idioma para Português do Brasil
+                timeZone="America/Sao_Paulo"
+                mode="range"
+                selected={{ from: startDate, to: endDate }}
+                numberOfMonths={2}
+                onSelect={(e) => {
+                  setStartDate(e.from);
+                  setEndDate(e.to);
+                }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
       <div className="relatorios-report-sections">
         <div className="relatorios-report-section">
           <Typography variant="h2">Operacionais</Typography>

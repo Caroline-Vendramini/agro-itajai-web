@@ -47,10 +47,13 @@
         width: calc(690px / 3);
       }
       .w350 {
-        width: 350px;
+        min-width: 200px;
+        width: 33%;
+        max-width: 350px;
       }
       .w710 {
-        width: 710px;
+        min-width: 405px;
+        max-width: 710px;
       }
     }
   }

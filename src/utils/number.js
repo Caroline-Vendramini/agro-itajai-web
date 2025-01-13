@@ -1,12 +1,16 @@
-import { ignoreNaN } from "./money";
-
 export const stringToNumber = (value) => {
-  if (!value) {
-    return 0;
-  }
   if (typeof value === "number") {
-    return value;
+    return value; // Se já for número, retorna o mesmo
   }
-  const result = parseFloat(value.replace(/\./g, "").replace(",", ".").replace(/[^\d.-]/g, ""));
-  return ignoreNaN(result);
-};
+
+  if (typeof value === "string") {
+    // Substituir apenas vírgula por ponto decimal
+    const normalizedValue = value
+      .replace(/\.(?=\d{3}(,|$))/g, "") // Remove pontos como separadores de milhares
+      .replace(",", "."); // Substitui vírgula por ponto decimal
+
+    return parseFloat(normalizedValue.replace(/[^\d.-]/g, "")); // Converte para número
+  }
+
+  throw new Error("Invalid input: expected a string or number.");
+}

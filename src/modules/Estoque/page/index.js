@@ -92,7 +92,7 @@ function Estoque() {
     );
     setFilteredProducts(filtered);
     hideLoader();
-  }, [search, products]);
+  }, [search, products, showLoader, hideLoader]);
 
   const fetchProducts = useCallback(async () => {
     showLoader();
@@ -118,7 +118,7 @@ function Estoque() {
           cost: formatMoney(product.cost),
           stock: `${product.stock} ${product.measureUnit ?? ""}`,
           price: formatMoney(product.price),
-          profit: profitMargin(product.cost, product.price),
+          profit: profitMargin(product.cost, product.price, true),
           action: (
             <div style={{ display: "flex", gap: "2px" }}>
               <Button
@@ -188,12 +188,18 @@ function Estoque() {
         };
       });
       setProducts(mappedProducts);
-      handleSearch();
     } catch (error) {
       console.error(error);
     }
     hideLoader();
-  }, [toggleUpdateProductModal]);
+  }, [toggleUpdateProductModal,
+    showLoader,
+    hideLoader,
+    toggleProductOutModal,
+    fetchData,
+    toggleModal,
+    toggleProductEntryModal, toggleUpdateProductPriceModal,
+  ]);
 
   const handleOpenRegisterProduct = () => {
     toggleRegisterProductModal();
@@ -346,8 +352,8 @@ function Estoque() {
     const cost = formData.get("cost");
     const measureUnit = formData.get("measureUnit");
     const stock = formData.get("stock");
-    const brand = formData.get("brand");
-    const category = formData.get("category");
+    const brand = selectedBrand;
+    const category = selectedCategory;
 
     if (
       !name ||
@@ -389,6 +395,10 @@ function Estoque() {
         toggleRegisterProductModal();
         setSelectedBrand("");
         setSelectedCategory("");
+        setNewProductPrices({
+          cost: '', price: ''
+        })
+        e.target.reset();
       })
       .catch((error) => {
         console.error(error);

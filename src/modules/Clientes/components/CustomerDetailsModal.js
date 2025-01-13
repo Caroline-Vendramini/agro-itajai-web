@@ -5,6 +5,7 @@ import Table from "../../../components/table/Table";
 import Typography from "../../../components/typography/Typography";
 import { formatDate } from "../../../utils/date";
 import { formatMoney } from "../../../utils/money";
+import { useNavigate } from "react-router-dom";
 
 const CustomerDetailsModal = ({
   isModalOpen,
@@ -13,6 +14,7 @@ const CustomerDetailsModal = ({
   togglePayModal,
 }) => {
   const [activeTab, setActiveTab] = useState("debits");
+  const navigate = useNavigate();
   const closeModal = () => {
     setActiveTab("debits");
     toggleModal();
@@ -100,19 +102,24 @@ const CustomerDetailsModal = ({
                   <Table.Cell>Ação</Table.Cell>
                 </Table.Head>
                 <Table.Body>
-                  {customerDetails?.debits.map((debit, index) => (
+                  {customerDetails?.debits.map((order, index) => (
                     <Table.Row key={index}>
-                      <Table.Cell>{formatDate(debit.date)}</Table.Cell>
-                      <Table.Cell>{formatMoney(debit.total)}</Table.Cell>
-                      <Table.Cell>{debit.Store.name}</Table.Cell>
-                      {/* <Table.Cell>{debit.description}</Table.Cell> */}
+                      <Table.Cell>{formatDate(order.date)}</Table.Cell>
+                      <Table.Cell>{formatMoney(order.total)}</Table.Cell>
+                      <Table.Cell>{order.Store.name}</Table.Cell>
+                      {/* <Table.Cell>{order.description}</Table.Cell> */}
                       <Table.Cell>
                         <Button
-                          onClick={() =>
-                            console.log(
-                              "redireciona para vendas, passando o id da venda"
-                            )
-                          }
+                          onClick={() => {
+                            navigate('/vendas', {
+                              state: {
+                                orderDetails: {
+                                  date: formatDate(order.date),
+                                  order: order
+                                }
+                              }
+                            });
+                          }}
                         >
                           Detalhes
                         </Button>

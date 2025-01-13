@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { GoAlert } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../components/button/Button";
@@ -8,7 +8,7 @@ import useAxios from "../../../hooks/useAxios";
 import useModal from "../../../hooks/useModal";
 import { getDataFromCaixa, seeBalanceDetails } from "../../../utils/balance";
 import { formatDate, formatDateToISO } from "../../../utils/date";
-import { formatMoney } from "../../../utils/money";
+import { formatMoney, profitMargin } from "../../../utils/money";
 import BalanceDetailsModal from "../components/BalanceDetailsModal";
 import "./index.css";
 
@@ -30,9 +30,10 @@ function Dashboard() {
   const [debitPaymentsToday, setDebitPaymentsToday] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [dayProfit, setDayProfit] = useState(0);
-  const [dayProfitPct, setDayProfitPct] = useState(0);
+  const [dayProfitPct, setDayProfitPct] = useState('0%');
   const [monthProfit, setMonthProfit] = useState(0);
-  const [monthProfitPct, setMonthProfitPct] = useState(0);
+  const [monthProfitPct, setMonthProfitPct] = useState('0%');
+  const [monthTotalSaled, setMonthTotalSaled] = useState(0);
   const [balanceDetails, setBalanceDetails] = useState(null);
 
   const { fetchData } = useAxios();
@@ -50,17 +51,18 @@ function Dashboard() {
       })
         .then((res) => {
           const { price, cost } = res.data;
+          setMonthTotalSaled(price);
           setMonthProfit(price - cost);
-          setMonthProfitPct((price - cost) / price);
+          setMonthProfitPct(profitMargin(cost, price));
         })
         .catch((error) => {
           console.error(error);
         });
     };
     fn();
-  }, []);
+  }, [fetchData]);
 
-  const fetchCaixas = async () => {
+  const fetchCaixas = useCallback(async () => {
     const response = await fetchData({
       url: "/cash-balance/dashboard",
     });
@@ -81,7 +83,7 @@ function Dashboard() {
         setTotalDiscount(discount);
         setOrdersByPaymentMethod(ordersByPaymentMethodForTheDay);
         setDayProfit(totalPrice - totalCost);
-        setDayProfitPct((totalPrice - totalCost) / totalPrice);
+        setDayProfitPct(profitMargin(totalCost, totalPrice));
         setCurrentCaixa(caixa);
       } else if (!caixa.closed) {
         setOpenCaixas((prev) => [...prev, caixa]);
@@ -110,11 +112,11 @@ function Dashboard() {
       };
     });
     setCaixas(newCaixas);
-  };
+  }, [fetchData, toggleBalanceDetailsModalOpen]);
 
   useEffect(() => {
     fetchCaixas();
-  }, []);
+  }, [fetchCaixas]);
 
   const handleNewSaleClick = () => {
     navigate("/vendas", {
@@ -292,18 +294,16 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div
+          {/* <div
             className="total-saled-today"
-            title="Lembre-se de que o lucro bruto não é o lucro líquido. O lucro bruto é o valor total das vendas menos o custo dos produtos vendidos. Você ainda precisa subtrair as despesas operacionais, como aluguel, água, luz e impostos, para calcular o lucro líquido."
           >
             <Typography variant={"h5"}>Total vendido hoje</Typography>
             <span className="gree-bold">
               {formatMoney(currentCaixa?.amount)}
             </span>
-          </div>
+          </div> */}
           <div
             className="total-discount"
-            title="Lembre-se de que o lucro bruto não é o lucro líquido. O lucro bruto é o valor total das vendas menos o custo dos produtos vendidos. Você ainda precisa subtrair as despesas operacionais, como aluguel, água, luz e impostos, para calcular o lucro líquido."
           >
             <Typography variant={"h5"}>Total de desconto concedido</Typography>
             <span className={totalDiscount > 0 ? "red-bold" : ""}>
@@ -317,7 +317,7 @@ function Dashboard() {
           >
             <Typography variant={"h5"}>Lucro bruto do dia</Typography>
             <span className="gree-bold">
-              {formatMoney(dayProfit)} ({(dayProfitPct * 100).toFixed(2)}%)
+              {formatMoney(dayProfit)} <span>({dayProfitPct} de {formatMoney(currentCaixa?.amount)} vendidos hoje)</span>
             </span>
           </div>
           <div
@@ -326,7 +326,7 @@ function Dashboard() {
           >
             <Typography variant={"h5"}>Lucro bruto do mês</Typography>
             <span className="gree-bold">
-              {formatMoney(monthProfit)} ({(monthProfitPct * 100).toFixed(2)}%)
+              {formatMoney(monthProfit)} <span>({monthProfitPct} de {formatMoney(monthTotalSaled)} vendidos no mês)</span>
             </span>
           </div>
         </div>
